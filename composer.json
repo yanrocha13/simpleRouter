@@ -8,9 +8,12 @@
 	],
 	"license": "MIT",
 	"type": "project",
-	"require": {
-		"php": ">=7.1",
-		"pecee/simple-router": "^4.0"
+	"require": {"phpunit/phpunit": "^8.3",
+		"illuminate/database": "^6.10",
+		"php-di/php-di": "^6.2",
+		"monolog/monolog": "^2.1",
+		"twig/twig": "^3.0",
+		"pecee/simple-router": "4.2.0.6"
 	},
 	"require-dev": {
 
@@ -20,7 +23,8 @@
 	},
     "autoload": {
       "psr-4": {
-        "Demo\\": "app/"
+        "Demo\\": "app/",
+		  "Routes\\" : "routes/"
       }
     }
 }

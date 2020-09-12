@@ -1,7 +1,12 @@
 <?php
 
 // load composer dependencies
+use Demo\Router;
+
 require '../vendor/autoload.php';
+require '../database.php';
+
+
 
 // Start the routing
-\Demo\Router::start();
+Router::start();

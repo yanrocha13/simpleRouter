@@ -21,6 +21,11 @@ Router::group(['namespace' => '\Demo\Controllers', 'exceptionHandler' => \Demo\H
 		Router::resource('/demo', 'ApiController');
 	});
 
+    Router::group(['prefix' => '/api', 'middleware' => \Demo\Middlewares\ApiVerification::class], function () {
+        Router::resource('/user', 'UsersController');
+    });
+
+
     // CALLBACK EXAMPLES
 
     Router::get('/foo', function() {
