@@ -1,106 +1,88 @@
-# simple-router demo project
+# PROJETO TRILHA 1
 
-## Notes
+## BANCO DE DADOS
 
-This project is here to give you a basic understanding of how to setup and using simple-php-router.
+``CREATE TABLE `users` (
+ `id` int(10) NOT NULL AUTO_INCREMENT,
+ `email` varchar(255) NOT NULL,
+ `password` varchar(255) NOT NULL,
+ `name` varchar(255) NOT NULL,
+ `identification` varchar(255) NOT NULL,
+ `registration` varchar(255) NOT NULL,
+ `birth_date` varchar(255) NOT NULL,
+ `created_at` timestamp NULL DEFAULT NULL,
+ `updated_at` timestamp NULL DEFAULT NULL,
+ `deleted_at` timestamp NULL DEFAULT NULL,
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;``
 
-You can find the documentation for simple-php-router here:
-https://github.com/skipperbent/simple-php-router
 
-Please note that this demo-project only covers how to integrate the `simple-router` in a project without a framework. If you are using some sort of PHP framework in your project the implementation might vary.
+``CREATE TABLE `user_phone` (
+ `id` int(10) NOT NULL AUTO_INCREMENT,
+ `user_id` int(10) NOT NULL,
+ `phone` varchar(255) NOT NULL,
+ `created_at` timestamp NULL DEFAULT NULL,
+ `updated_at` timestamp NULL DEFAULT NULL,
+ `deleted_at` timestamp NULL DEFAULT NULL,
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;``
 
-**What we won't cover:**
 
-- How to setup a solution that fits your need. This is a basic demo to help you get started.
-- Understanding of MVC; including Controllers, Middlewares or ExceptionHandlers.
-- How to integrate into third party frameworks.
+``CREATE TABLE `user_address` (
+ `id` int(10) NOT NULL AUTO_INCREMENT,
+ `user_id` int(10) NOT NULL,
+ `cep` varchar(255) NOT NULL,
+ `address` varchar(255) NOT NULL,
+ `number` varchar(255) NOT NULL,
+ `reference` varchar(255) NOT NULL,
+ `observation` varchar(255) not NULL,
+ `created_at` timestamp NULL DEFAULT NULL,
+ `updated_at` timestamp NULL DEFAULT NULL,
+ `deleted_at` timestamp NULL DEFAULT NULL,
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;``
 
-**What we cover:**
 
-- How to get up and running fast - from scratch.
-- How to get ExceptionHandlers, Middlewares and Controllers working.
-- How to setup your webservers.
+``CREATE TABLE `user_account` (
+ `id` int(10) NOT NULL AUTO_INCREMENT,
+ `user_id` int(10) NOT NULL,
+ `account_number` varchar(255) NOT NULL,
+ `funds` varchar(255) NOT NULL,
+ `created_at` timestamp NULL DEFAULT NULL,
+ `updated_at` timestamp NULL DEFAULT NULL,
+ `deleted_at` timestamp NULL DEFAULT NULL,
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;``
 
-## Installation
 
-- Navigate to the `demo-project` folder in terminal and run `composer update` to install the latest version.
-- Point your webserver to `demo-project/public`.
+``CREATE TABLE `account_transactions` (
+ `id` int(10) NOT NULL AUTO_INCREMENT,
+ `account_origin_id` int(10) NOT NULL,
+ `account_destination_id` int(10) NOT NULL,
+ `value` varchar(255) NOT NULL,
+ `transaction_type` varchar(255) NOT NULL,
+ `transaction_date` varchar(255) NOT NULL,
+ `created_at` timestamp NULL DEFAULT NULL,
+ `updated_at` timestamp NULL DEFAULT NULL,
+ `deleted_at` timestamp NULL DEFAULT NULL,
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;``
 
-### Setting up Nginx
 
-If you are using Nginx please make sure that url-rewriting is enabled.
+`ALTER TABLE user_phone ADD CONSTRAINT FK_userIdPhone FOREIGN KEY (user_id) REFERENCES users(id);`
 
-You can easily enable url-rewriting by adding the following configuration for the Nginx configuration-file for the demo-project.
 
-```
-location / {
-    try_files $uri $uri/ /index.php?$query_string;
-}
-```
+`ALTER TABLE user_address ADD CONSTRAINT FK_userIdAddress FOREIGN KEY (user_id) REFERENCES users(id);`
 
-### Setting up Apache
 
-Nothing special is required for Apache to work. We've include the `.htaccess` file in the `public` folder. If rewriting is not working for you, please check that the `mod_rewrite` module (htaccess support) is enabled in the Apache configuration.
+`ALTER TABLE user_account ADD CONSTRAINT FK_userIdAccount FOREIGN KEY (user_id) REFERENCES users(id);`
 
-## Folder structure
 
-| Folder        | Description |
-| ------------- |-------------|
-| routes         |Folder contains the files with our custom routes.|
-| app            |Contains projects-specific PHP classes.|
-| public         |Public folder which are accessible through the web.|
+`ALTER TABLE account_transactions ADD CONSTRAINT FK_accountOrigin FOREIGN KEY (account_origin_id) REFERENCES user_account(id);`
 
-## Notes
 
-The demo project has it's own `Router` class implementation which extends the `SimpleRouter` class with further functionality.
-This class can be useful adding additional functionality that are required before and after routing occurs or any extra functionality belonging to the router itself.
+`ALTER TABLE account_transactions ADD CONSTRAINT FK_accountDestination FOREIGN KEY (account_destination_id) REFERENCES user_account(id);`
 
-In this project we also use our custom router-class to autoload the `routes.php` file from our custom location (`app/routes.php`).
 
-Please check the `routes.php` file in `demo-project/app` for all the urls/rules available in the project.
 
-### CSRF-verifier
 
-For the purpose of this demo, we've added a custom CSRF-verifier middleware called `CsrfVerifier` and disabled CSRF checks for all calls to `/api/*`. This will ensure that CSRF form-checks are not applied when calling our demo api url.
-
-### Exception handlers
-
-The included `CustomExceptionHandler` class returns a very basic json response for errors received on calls to `/api/*` or otherwise just a simple formatted error response.
-
-### Middlewares
-
-`ApiVerification` class is added to all calls to `/api/*`. This simple class just adds some data to the `Request` object, which is returned in one of the methods in the `ApiController` class. We've added this class to demonstrate that you can use middlewares to ensure that the user has the correct authentication - before router loads the controller itself.
-
-### Urls
-
-Please see `routes.php` for all routes and rules.
-
-| URL        |
-| ------------- |
-| /             |
-| /api/demo       |
-| /companies       |
-| /companies/[id]  |
-| /contact         |
-
-## The MIT License (MIT)
-
-Copyright (c) 2016 Simon Sessingø / simple-router
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.

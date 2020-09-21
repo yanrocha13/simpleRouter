@@ -20,27 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aac28da5-1c86-4ba4-9aef-9e63b6bd8d9e" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Middlewares/Auth.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Models/Auth.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/simple-router-demo.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/simple-router-demo.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Controllers/AccountTransacationsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Controllers/AccountTransacationsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Controllers/DefaultController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Controllers/DefaultController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Controllers/UserAddressController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Controllers/UserAddressController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Controllers/UserPhoneController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Controllers/UserPhoneController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Controllers/UsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Controllers/UsersController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Middlewares/ApiVerification.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Middlewares/ApiVerification.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/AccountTransactions.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/AccountTransactions.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/UserAccount.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/UserAccount.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/UserAddress.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/UserAddress.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/UserPhone.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/UserPhone.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Users.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Users.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/helpers.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/helpers.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -159,7 +140,7 @@
       <workItem from="1522356121932" duration="3001000" />
       <workItem from="1600377398428" duration="617000" />
       <workItem from="1600464845948" duration="11386000" />
-      <workItem from="1600660904561" duration="7171000" />
+      <workItem from="1600660904561" duration="7583000" />
     </task>
     <servers />
   </component>
