@@ -61,6 +61,14 @@ function input($index = null, $defaultValue = null, ...$methods)
 }
 
 /**
+ * @return string|null
+ */
+function headers()
+{
+    return request()->getHeader('Authorization');
+}
+
+/**
  * @param string $url
  * @param int|null $code
  */
@@ -85,4 +93,31 @@ function csrf_token(): ?string
     }
 
     return null;
+}
+
+function xorEncrypt($value, $type = "encrypt")
+{
+    if ($type == "decrypt") {
+        $value = base64_decode($value);
+    }
+    $customKey       = 'simplerouter';
+    $valueLength     = strlen($value);
+    $customKeyLength = strlen($customKey);
+    for ($i = 0; $i < $valueLength; $i++) {
+        for ($j = 0; $j < $customKeyLength; $j++) {
+            if ($type == "decrypt") {
+                $value[$i] = $customKey[$j] ^ $value[$i];
+            } else {
+                $value[$i] = $value[$i] ^ $customKey[$j];
+            }
+        }
+    }
+
+    $result = $value;
+
+    if ($type == "encrypt") {
+        $result = base64_encode($value);
+    }
+
+    return $result;
 }
