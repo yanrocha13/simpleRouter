@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Demo\Middlewares;
+namespace Demo\Repository;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Auth extends Model
+class AccountTransactionRepository extends Model
 {
 
 }

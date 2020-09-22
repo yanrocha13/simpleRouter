@@ -1,19 +1,20 @@
 <?php
 namespace Demo\Controllers;
 
-use Demo\Models\Auth;
+
+use Demo\Repository\AuthRepository;
 use Demo\Models\Users;
 
 class DefaultController
 {
 
     /**
-     * @var Auth
+     * @var AuthRepository
      */
     private $auth;
 
     public function __construct(
-        Auth $auth
+        AuthRepository $auth
     )
     {
         $this->auth = $auth;
@@ -36,7 +37,8 @@ class DefaultController
 	public function home(): string
 	{
 		// implement
-		return sprintf('DefaultController -> index (?fun=%s)', input('fun'));
+		return response()->json([
+        'Error' => $_COOKIE["authentication"]]);
 	}
 
 	public function contact(): string

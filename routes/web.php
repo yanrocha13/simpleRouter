@@ -24,11 +24,19 @@ Router::group(['namespace' => '\Demo\Controllers', 'exceptionHandler' => \Demo\H
 
     // API
 
-	Router::group(['prefix' => '/api', 'middleware' => \Demo\Middlewares\ApiVerification::class], function () {
+	Router::group(['prefix' => '/api'], function () {
+        Router::get('/', 'DefaultController@home')->setName('home');
 		Router::resource('/demo', 'ApiController');
-        Router::resource('/user', 'UsersController');
-        Router::resource('/phone', 'UserPhoneController');
-        Router::resource('/address', 'UserAddressController');
+        Router::post('/user', 'UsersController@store');
+
+		Router::group(['prefix' => '/v1','exceptionHandler' => \Core\Handlers\CustomExceptionHandler::class , 'middleware' => \Demo\Middlewares\ApiVerification::class], function(){
+            Router::get('/user', 'UsersController@index');
+            Router::get('/user/{id}', 'UsersController@show');
+            Router::get('/user/edit/{id}', 'UsersController@edit');
+            Router::post('/user/edit/{id}', 'UsersController@update');
+            Router::resource('/phone', 'UserPhoneController');
+            Router::resource('/address', 'UserAddressController');
+        });;
         Router::post('/auth', 'DefaultController@authentication');
 	});
 
