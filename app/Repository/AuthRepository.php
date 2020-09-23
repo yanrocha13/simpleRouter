@@ -4,16 +4,14 @@ declare(strict_types=1);
 namespace Demo\Repository;
 
 use Demo\Models\Users;
+use Demo\Repository\Api\AuthInterface;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
-use Lcobucci\JWT\Signer\Key;
-use Lcobucci\JWT\Token;
+class AuthRepository implements AuthInterface
 
-class AuthRepository extends Model
 {
-
     /**
      * @var Builder
      */
@@ -75,6 +73,4 @@ class AuthRepository extends Model
         $token = xorEncrypt($users->email . ':' . $users->password);
         return $token;
     }
-
-
 }

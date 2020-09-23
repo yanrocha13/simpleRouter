@@ -4,9 +4,10 @@ declare(strict_types=1);
 namespace Demo\Repository;
 
 use Demo\Models\Users;
+use Demo\Repository\Api\UserRepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
 
-class UsersRepository
+class UsersRepository implements UserRepositoryInterface
 {
     public function whereFirst($parameter, $data){
         return $users = Users::where($parameter,$data)->first();

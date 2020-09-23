@@ -7,6 +7,7 @@ use Demo\Router;
 
 
 $container = (new \DI\ContainerBuilder())
+    ->addDefinitions('../etc/di.php')
     ->useAutowiring(true)
     ->build();
 

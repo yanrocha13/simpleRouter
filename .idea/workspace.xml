@@ -20,15 +20,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aac28da5-1c86-4ba4-9aef-9e63b6bd8d9e" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Repository/AccountTransactionRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Repository/UserAccountRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Repository/UsersRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Repository/Api/AccountTransactionInterface.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Repository/Api/AuthInterface.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Repository/Api/UserAccountInterface.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Repository/Api/UserRepositoryInterface.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/etc/di.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Controllers/DefaultController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Controllers/DefaultController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Controllers/UsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Controllers/UsersController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Middlewares/ApiVerification.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Middlewares/ApiVerification.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Middlewares/Auth.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Middlewares/Auth.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Auth.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repository/AuthRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repository/AccountTransactionRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repository/AccountTransactionRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repository/AuthRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repository/AuthRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repository/UserAccountRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repository/UserAccountRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repository/UsersRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repository/UsersRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -124,7 +126,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/Repository" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/Repository/Api" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
@@ -132,14 +134,16 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/app/Repository" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/Repository/Api" />
       <recent name="$PROJECT_DIR$/app/Repository" />
       <recent name="$PROJECT_DIR$/app/Controllers" />
       <recent name="$PROJECT_DIR$/app/Handlers" />
       <recent name="$PROJECT_DIR$/app/Middlewares" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/etc" />
+      <recent name="$PROJECT_DIR$/app/Repository" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -160,7 +164,8 @@
       <workItem from="1600377398428" duration="617000" />
       <workItem from="1600464845948" duration="11386000" />
       <workItem from="1600660904561" duration="8228000" />
-      <workItem from="1600744516304" duration="7942000" />
+      <workItem from="1600744516304" duration="8064000" />
+      <workItem from="1600807647948" duration="4948000" />
     </task>
     <servers />
   </component>
@@ -205,18 +210,22 @@
       <screen x="1366" y="0" width="2560" height="1080" />
     </state>
     <state x="2471" y="234" width="412" height="652" key="#com.intellij.ide.util.MemberChooser/1366.0.2560.1080/0.144.1366.768@1366.0.2560.1080" timestamp="1600664495882" />
-    <state x="2415" y="311" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1600748803719">
+    <state x="2415" y="311" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1600834626731">
       <screen x="1366" y="0" width="2560" height="1080" />
     </state>
-    <state x="2415" y="311" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/1366.0.2560.1080/0.144.1366.768@1366.0.2560.1080" timestamp="1600748803719" />
+    <state x="2415" y="311" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/1366.0.2560.1080/0.144.1366.768@1366.0.2560.1080" timestamp="1600834626731" />
     <state x="2465" y="311" width="424" height="491" key="FileChooserDialogImpl" timestamp="1600744605092">
       <screen x="1366" y="0" width="2560" height="1080" />
     </state>
     <state x="2465" y="311" width="424" height="491" key="FileChooserDialogImpl/1366.0.2560.1080/0.144.1366.768@1366.0.2560.1080" timestamp="1600744605092" />
-    <state x="2360" y="273" width="673" height="568" key="NewPhpClassDialog" timestamp="1600748539607">
+    <state x="2360" y="273" width="705" height="568" key="NewPhpClassDialog" timestamp="1600834391971">
       <screen x="1366" y="0" width="2560" height="1080" />
     </state>
-    <state x="2360" y="273" width="673" height="568" key="NewPhpClassDialog/1366.0.2560.1080/0.144.1366.768@1366.0.2560.1080" timestamp="1600748539607" />
+    <state x="2360" y="273" width="705" height="568" key="NewPhpClassDialog/1366.0.2560.1080/0.144.1366.768@1366.0.2560.1080" timestamp="1600834391971" />
+    <state x="2477" y="479" width="399" height="156" key="NewPhpFileDialog" timestamp="1600830688722">
+      <screen x="1366" y="0" width="2560" height="1080" />
+    </state>
+    <state x="2477" y="479" width="399" height="156" key="NewPhpFileDialog/1366.0.2560.1080/0.144.1366.768@1366.0.2560.1080" timestamp="1600830688722" />
     <state x="2171" y="188" width="1022" height="737" key="SettingsEditor" timestamp="1600637714187">
       <screen x="1366" y="0" width="2560" height="1080" />
     </state>
@@ -229,9 +238,10 @@
       <screen x="1366" y="0" width="2560" height="1080" />
     </state>
     <state x="1538" y="127" width="2288" height="853" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog/1366.0.2560.1080/0.144.1366.768@1366.0.2560.1080" timestamp="1600748813393" />
-    <state x="2345" y="259" width="672" height="678" key="search.everywhere.popup" timestamp="1600469730974">
-      <screen x="1366" y="0" width="2560" height="1080" />
+    <state x="522" y="328" width="672" height="483" key="search.everywhere.popup" timestamp="1600807811774">
+      <screen x="0" y="144" width="1366" height="768" />
     </state>
+    <state x="522" y="328" width="672" height="483" key="search.everywhere.popup/1366.0.2560.1080/0.144.1366.768@0.144.1366.768" timestamp="1600807811774" />
     <state x="2345" y="259" width="672" height="678" key="search.everywhere.popup/1366.0.2560.1080/0.144.1366.768@1366.0.2560.1080" timestamp="1600469730974" />
   </component>
   <component name="XDebuggerManager">
@@ -239,7 +249,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/app/Repository/AuthRepository.php</url>
-          <line>45</line>
+          <line>43</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">

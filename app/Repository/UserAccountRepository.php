@@ -4,9 +4,10 @@ declare(strict_types=1);
 namespace Demo\Repository;
 
 use Demo\Models\UserAccount;
+use Demo\Repository\Api\UserAccountInterface;
 use Illuminate\Database\Eloquent\Model;
 
-class UserAccountRepository
+class UserAccountRepository implements UserAccountInterface
 {
 
     public function create($userAccount){

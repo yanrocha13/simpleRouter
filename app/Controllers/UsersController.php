@@ -3,42 +3,32 @@ declare(strict_types=1);
 
 namespace Demo\Controllers;
 
-
-use Demo\Models\UserAccount;
-use Demo\Models\Users;
-use Demo\Repository\UserAccountRepository;
-use Demo\Repository\UsersRepository;
+use Demo\Repository\Api\UserAccountInterface;
+use Demo\Repository\Api\UserRepositoryInterface;
 use Pecee\Controllers\IResourceController;
-use Pecee\Http\Request;
 use Symfony\Component\Translation\Exception\ExceptionInterface;
-use Twig\Environment;
-use Illuminate\Support\Facades\Crypt;
 
 class UsersController implements IResourceController
 {
     /**
-     * @var Environment
-     */
-    private $twig;
-
-    /**
-     * @var UsersRepository
+     * @var UserRepositoryInterface
      */
     private $usersRepository;
 
     /**
-     * @var UserAccountRepository
+     * @var UserAccountInterface
      */
     private $userAccountRepository;
 
     /**
      * UsersController constructor.
+     * @param UserRepositoryInterface $usersRepository
+     * @param UserAccountInterface $userAccountRepository
      */
-    public function __construct(UsersRepository $usersRepository, UserAccountRepository $userAccountRepository)
+    public function __construct(UserRepositoryInterface $usersRepository, UserAccountInterface $userAccountRepository)
     {
         $this->usersRepository = $usersRepository;
         $this->userAccountRepository = $userAccountRepository;
-        $this->twig = require(__DIR__ . '/../../renderer.php');
     }
 
     /**
