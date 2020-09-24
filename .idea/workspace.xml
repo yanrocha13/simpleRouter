@@ -20,23 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aac28da5-1c86-4ba4-9aef-9e63b6bd8d9e" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Repository/Api/UserAddressRepositoryInterface.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Repository/Api/UserPhoneRepositoryInterface.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Repository/UserAddressRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Repository/UserPhoneRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Controllers/UserAddressController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Controllers/UserAddressController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Controllers/UserPhoneController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Controllers/UserPhoneController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Controllers/UsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Controllers/UsersController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repository/AccountTransactionRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repository/AccountTransactionRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repository/Api/AccountTransactionInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repository/Api/AccountTransactionRepositoryInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repository/Api/UserAccountInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repository/Api/UserAccountRepositoryInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repository/Api/UserRepositoryInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repository/Api/UserRepositoryInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repository/AuthRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repository/AuthRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repository/UserAccountRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repository/UserAccountRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repository/UsersRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repository/UsersRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/etc/di.php" beforeDir="false" afterPath="$PROJECT_DIR$/etc/di.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -173,7 +157,7 @@
       <workItem from="1600807647948" duration="4948000" />
       <workItem from="1600865988448" duration="639000" />
       <workItem from="1600884859765" duration="1135000" />
-      <workItem from="1600917107500" duration="12642000" />
+      <workItem from="1600917107500" duration="13543000" />
     </task>
     <servers />
   </component>

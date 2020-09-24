@@ -30,6 +30,7 @@ Router::group(['namespace' => '\Demo\Controllers', 'exceptionHandler' => \Demo\H
 		Router::resource('/demo', 'ApiController');
         Router::get('/user/create', 'UsersController@create');
         Router::post('/user/create', 'UsersController@store');
+        Router::post('/auth', 'DefaultController@authentication');
 
 		Router::group(['prefix' => '/v1','exceptionHandler' => \Core\Handlers\CustomExceptionHandler::class , 'middleware' => \Demo\Middlewares\ApiVerification::class], function(){
 		    /** USER */
@@ -45,10 +46,23 @@ Router::group(['namespace' => '\Demo\Controllers', 'exceptionHandler' => \Demo\H
             Router::post('/phone/create', 'UserPhoneController@store');
             Router::delete('/phone/delete/{id}', 'UserPhoneController@destroy');
 
-            /**  */
-            Router::resource('/address', 'UserAddressController');
+            /** ADDRESS */
+            Router::get('/address/{id}', 'UserAddressController@show');
+            Router::get('/address/edit/{id}', 'UserAddressController@edit');
+            Router::post('/address/edit/{id}', 'UserAddressController@update');
+            Router::post('/address/create', 'UserAddressController@store');
+            Router::delete('/address/delete/{id}', 'UserAddressController@destroy');
+
+            /** USERACCOUNT */
+            Router::get('/account/{id}', 'UserAccountController@show');
+
+            /** ACCOUNTTRANSACTION */
+            Router::get('/transaction/', 'AccountTransactionsController@index');
+            Router::get('/transaction/{id}', 'AccountTransactionsController@show');
+            Router::get('/transaction/create', 'AccountTransactionsController@create');
+            Router::post('/transaction/create', 'AccountTransactionsController@store');
+
         });
-        Router::post('/auth', 'DefaultController@authentication');
 	});
 
 
