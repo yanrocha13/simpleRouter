@@ -4,14 +4,26 @@ declare(strict_types=1);
 namespace Demo\Repository;
 
 use Demo\Models\UserAccount;
-use Demo\Repository\Api\UserAccountInterface;
-use Illuminate\Database\Eloquent\Model;
+use Demo\Repository\Api\UserAccountRepositoryInterface;
 
-class UserAccountRepository implements UserAccountInterface
+class UserAccountRepository implements UserAccountRepositoryInterface
 {
+    /**
+     * @var UserAccount
+     */
+    private $userAccount;
+
+    /**
+     * UserAccountRepository constructor.
+     * @param UserAccount $userAccount
+     */
+    public function __construct(UserAccount $userAccount)
+    {
+        $this->userAccount = $userAccount;
+    }
 
     public function create($userAccount){
-        return UserAccount::create($userAccount);
+        return $this->userAccount->create($userAccount);
     }
 
     public function createAccountNumber($user){
@@ -21,6 +33,10 @@ class UserAccountRepository implements UserAccountInterface
         $accountNumber .= strval(strlen($user->name) * $user->id);
 
         return  $accountNumber;
+    }
+
+    public function remove($id){
+        return $this->userAccount->find($id)->delete();
     }
 
 }

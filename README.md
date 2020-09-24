@@ -83,6 +83,5 @@
 
 `ALTER TABLE account_transactions ADD CONSTRAINT FK_accountDestination FOREIGN KEY (account_destination_id) REFERENCES user_account(id);`
 
-
-
-
+## DEFINIÇÃO DE ROTAS
+https://docs.google.com/spreadsheets/d/1-KFW_22H571FuB-V5KhMm86IBxdHagnzkRX_NF7vA94/edit?usp=sharing

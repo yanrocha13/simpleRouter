@@ -4,20 +4,39 @@ declare(strict_types=1);
 namespace Demo\Controllers;
 
 use Demo\Models\UserPhone;
-use Demo\Models\Users;
+use Demo\Repository\Api\UserPhoneRepositoryInterface;
+use Demo\Repository\Api\UserRepositoryInterface;
 use Pecee\Controllers\IResourceController;
 
 class UserPhoneController implements IResourceController
 {
+    /**
+     * @var UserRepositoryInterface
+     */
+    private $usersRepository;
+
+    /**
+     * @var UserPhoneRepositoryInterface
+     */
+    private $userPhoneRepository;
+
+    /**
+     * UsersController constructor.
+     * @param UserRepositoryInterface $usersRepository
+     * @param UserPhoneRepositoryInterface $userPhoneRepository
+     */
+    public function __construct(UserRepositoryInterface $usersRepository, UserPhoneRepositoryInterface $userPhoneRepository)
+    {
+        $this->usersRepository = $usersRepository;
+        $this->userPhoneRepository = $userPhoneRepository;
+    }
 
     /**
      * @return string|null
      */
     public function index(): ?string
     {
-        return response()->json([
-            'method' => "nada"
-        ]);
+        return "none";
     }
 
     /**
@@ -26,8 +45,19 @@ class UserPhoneController implements IResourceController
      */
     public function show($id): ?string
     {
+        $phoneList = $this->userPhoneRepository->find($id);
         return response()->json([
-            'method' => "nada"
+            'show' => $phoneList
+        ]);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function create(): ?string
+    {
+        return response()->json([
+            'create' => "nada"
         ]);
     }
 
@@ -39,14 +69,14 @@ class UserPhoneController implements IResourceController
         try{
             //TODO PASS LOCAL USER_ID IN PLACE OF USER EMAIL.
             $request = input()->all();
-            $user = Users::where('email',xorEncrypt($request['email']))->first();
+            $user = $this->usersRepository->whereFirst('email',xorEncrypt($request['email']));
 
             if(isset($user)){
                 $create = [ 'user_id'=> $user->id,
                     'phone' => xorEncrypt($request['phone'])];
-                $phone = UserPhone::create($create);
+                $phone = $this->userPhoneRepository->create($create);
                 return response()->json([
-                    'Success' => "Phone added to user " . $user->id
+                    'store' => "Phone added to user " . $user->id
                 ]);
             }else {
                 return response()->json([
@@ -55,20 +85,8 @@ class UserPhoneController implements IResourceController
             }
 
         }catch (ExceptionInterface $ex){
-            return response()->json([
-                'method' => $ex
-            ]);
+            throwException($ex);
         }
-    }
-
-    /**
-     * @return string|null
-     */
-    public function create(): ?string
-    {
-        return response()->json([
-            'method' => "nada"
-        ]);
     }
 
     /**
@@ -77,8 +95,9 @@ class UserPhoneController implements IResourceController
      */
     public function edit($id): ?string
     {
+        $phoneList = $this->userPhoneRepository->find($id);
         return response()->json([
-            'method' => "nada"
+            'edit' => $phoneList
         ]);
     }
 
@@ -88,9 +107,17 @@ class UserPhoneController implements IResourceController
      */
     public function update($id): ?string
     {
-        return response()->json([
-            'method' => "nada"
-        ]);
+        try{
+            $request = input()->all();
+            $update = [ "phone"=> xorEncrypt($request['phone'])];
+            $user = $this->userPhoneRepository->update($id, $update);
+
+            return response()->json([
+                'update' => "Updated user " . $id
+            ]);
+        } catch(\Exception $ex) {
+            throwException($ex);
+        }
     }
 
     /**
@@ -99,8 +126,13 @@ class UserPhoneController implements IResourceController
      */
     public function destroy($id): ?string
     {
-        return response()->json([
-            'method' => "nada"
-        ]);
+        try{
+            $destroy = $this->userPhoneRepository->remove($id);
+            return response()->json([
+                'destroy' => 'Phone number removed!'
+            ]);
+        } catch(\Exception $ex) {
+            throwException($ex);
+        }
     }
 }

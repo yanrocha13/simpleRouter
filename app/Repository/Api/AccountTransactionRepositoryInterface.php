@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Demo\Repository\Api;
 
-interface UserRepositoryInterface
+interface AccountTransactionRepositoryInterface
 {
     public function whereFirst($parameter, $data);
 

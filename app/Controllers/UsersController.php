@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace Demo\Controllers;
 
-use Demo\Repository\Api\UserAccountInterface;
+use Demo\Repository\Api\UserAccountRepositoryInterface;
+use Demo\Repository\Api\UserAddressRepositoryInterface;
+use Demo\Repository\Api\UserPhoneRepositoryInterface;
 use Demo\Repository\Api\UserRepositoryInterface;
 use Pecee\Controllers\IResourceController;
 use Symfony\Component\Translation\Exception\ExceptionInterface;
@@ -16,19 +18,55 @@ class UsersController implements IResourceController
     private $usersRepository;
 
     /**
-     * @var UserAccountInterface
+     * @var UserAccountRepositoryInterface
      */
     private $userAccountRepository;
 
     /**
+     * @var UserPhoneRepositoryInterface
+     */
+    private $userPhoneRepository;
+
+    /**
+     * @var UserAddressRepositoryInterface
+     */
+    private $userAddressRepository;
+
+    /**
      * UsersController constructor.
      * @param UserRepositoryInterface $usersRepository
-     * @param UserAccountInterface $userAccountRepository
+     * @param UserAccountRepositoryInterface $userAccountRepository
+     * @param UserPhoneRepositoryInterface $userPhoneRepository
+     * @param UserAddressRepositoryInterface $userAddressRepository
      */
-    public function __construct(UserRepositoryInterface $usersRepository, UserAccountInterface $userAccountRepository)
+    public function __construct(UserRepositoryInterface $usersRepository,
+                                UserAccountRepositoryInterface $userAccountRepository,
+                                UserPhoneRepositoryInterface $userPhoneRepository,
+                                UserAddressRepositoryInterface $userAddressRepository)
     {
         $this->usersRepository = $usersRepository;
         $this->userAccountRepository = $userAccountRepository;
+        $this->userPhoneRepository = $userPhoneRepository;
+        $this->userAddressRepository = $userAddressRepository;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function index(): ?string
+    {
+        $userList = $this->usersRepository->list();
+        return response()->json(['index' => $userList]);
+    }
+
+    /**
+     * @param mixed $id
+     * @return string|null
+     */
+    public function show($id): ?string
+    {
+        $user = $this->usersRepository->find($id);
+        return response()->json(['show' => $user]);
     }
 
     /**
@@ -36,8 +74,9 @@ class UsersController implements IResourceController
      */
     public function create(): ?string
     {
+        //TODO RETURN BLADE?
         return response()->json([
-            'method' => input()->all()
+            'blade' => 'create user blade'
         ]);
     }
 
@@ -56,6 +95,26 @@ class UsersController implements IResourceController
                         "birth_date"=> xorEncrypt($request['birth_date'])];
             $user = $this->usersRepository->create($create);
 
+            if(array_key_exists('phone',$request)) {
+                if(isset($request['phone'])) {
+                    $userPhone = ['user_id' => $user->id,
+                                  'phone' => xorEncrypt($request['phone'])];
+                    $this->userPhoneRepository->create($userPhone);
+                }
+            }
+
+            if(array_key_exists('cep',$request) && array_key_exists('address',$request)) {
+                if(isset($request['cep']) && isset($request['address'])) {
+                    $userAddress = [ 'user_id'=> $user->id,
+                        'cep' => xorEncrypt($request['cep']),
+                        'address' => xorEncrypt($request['address']),
+                        'number' => xorEncrypt($request['number']) ?? 'NONE',
+                        'reference' => xorEncrypt($request['reference']) ?? 'NONE',
+                        'observation' => xorEncrypt($request['observation']) ?? 'NONE'];
+                    $this->userAddressRepository->create($userAddress);
+                }
+            }
+
             $account_number = $this->userAccountRepository->createAccountNumber($user);
             $newAccount = [
                 "user_id" => $user->id,
@@ -66,31 +125,22 @@ class UsersController implements IResourceController
             $account = $this->userAccountRepository->create($newAccount);
 
             return response()->json([
-                'Success' => "Created user " . $user->id . ". With account number: " . xorEncrypt($account->account_number,'decrypt')
+                'create' => "Created user " . $user->id . ". With account number: " . xorEncrypt($account->account_number,'decrypt')
             ]);
+
         }catch (ExceptionInterface $ex){
+
             return response()->json([
                 'method' => $ex
             ]);
+
         }
-    }
-
-    public function index(): ?string
-    {
-        $userList = $this->usersRepository->list();
-        return response()->json($userList);
-    }
-
-    public function show($id): ?string
-    {
-        $user = $this->usersRepository->find($id);
-        return response()->json($user);
     }
 
     public function edit($id): ?string
     {
         $user = $this->usersRepository->find($id);
-        return response()->json($user);
+        return response()->json(['edit'=> $user]);
     }
 
     public function update($id): ?string
@@ -106,17 +156,18 @@ class UsersController implements IResourceController
             $user = $this->usersRepository->update($id, $update);
 
             return response()->json([
-                'Success' => "Updated user " . $id
+                'edit' => "Updated user " . $id
             ]);
 
         }catch(\Exception $ex){
             throwException($ex);
         }
-
     }
 
     public function destroy($id): ?string
     {
-        // TODO: Implement destroy() method.
+        return response()->json([
+            'Opppssss...' => 'Essa acao nao pode ser executada.'
+        ]);
     }
 }

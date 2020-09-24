@@ -10,14 +10,14 @@ use Pecee\Controllers\IResourceController;
 class UserAddressController implements IResourceController
 {
 
-    public function index(): ?string
-    {
-        // TODO: Implement index() method.
-    }
-
     public function show($id): ?string
     {
         // TODO: Implement show() method.
+    }
+
+    public function create(): ?string
+    {
+        // TODO: Implement create() method.
     }
 
     public function store(): ?string
@@ -51,10 +51,6 @@ class UserAddressController implements IResourceController
         }
     }
 
-    public function create(): ?string
-    {
-        // TODO: Implement create() method.
-    }
 
     public function edit($id): ?string
     {
@@ -69,5 +65,12 @@ class UserAddressController implements IResourceController
     public function destroy($id): ?string
     {
         // TODO: Implement destroy() method.
+    }
+
+    public function index(): ?string
+    {
+        return response()->json([
+            'Nada'
+        ]);
     }
 }

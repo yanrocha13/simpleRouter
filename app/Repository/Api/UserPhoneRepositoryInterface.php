@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace Demo\Repository\Api;
 
-interface UserRepositoryInterface
+interface UserPhoneRepositoryInterface
 {
     public function whereFirst($parameter, $data);
 
-    public function create($user);
+    public function create($userPhone);
 
     public function list();
 

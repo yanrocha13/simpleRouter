@@ -28,9 +28,10 @@ class AuthRepository implements AuthInterface
     private $userRepository;
 
     /**
-     * Auth constructor.
+     * AuthRepository constructor.
      * @param Builder $builder
      * @param Sha256 $sha256
+     * @param UsersRepository $userRepository
      */
     public function __construct(Builder $builder, Sha256 $sha256, UsersRepository $userRepository)
     {

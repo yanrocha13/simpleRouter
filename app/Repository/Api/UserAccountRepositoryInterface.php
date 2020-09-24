@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Demo\Repository\Api;
 
-interface UserAccountInterface
+interface UserAccountRepositoryInterface
 {
     public function create($userAccount);
     public function createAccountNumber($user);
