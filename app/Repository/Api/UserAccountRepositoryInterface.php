@@ -7,4 +7,6 @@ interface UserAccountRepositoryInterface
 {
     public function create($userAccount);
     public function createAccountNumber($user);
+    public function find($id);
+    public function remove($id);
 }

@@ -39,4 +39,8 @@ class UserAccountRepository implements UserAccountRepositoryInterface
         return $this->userAccount->find($id)->delete();
     }
 
+    public function find($id)
+    {
+        return $this->userAccount->find($id);
+    }
 }
