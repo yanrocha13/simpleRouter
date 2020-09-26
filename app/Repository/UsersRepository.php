@@ -54,6 +54,10 @@ class UsersRepository implements UserRepositoryInterface
         return $this->users->where($parameter,$data)->first();
     }
 
+    public function whereFirstWithRelation($parameter, $data, $relation = null){
+        return $this->users->where($parameter,$data)->with($relation)->first();
+    }
+
     public function create($user){
         return $this->users->create($user);
     }

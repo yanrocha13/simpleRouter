@@ -16,4 +16,5 @@ interface UserRepositoryInterface
     public function update($id, $update);
 
     public function remove($id);
+    public function whereFirstWithRelation($parameter, $data, $relation = null);
 }
