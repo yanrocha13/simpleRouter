@@ -113,7 +113,7 @@ class UserPhoneController implements IResourceController
             $user = $this->userPhoneRepository->update($id, $update);
 
             return response()->json([
-                'update' => "Updated user " . $id
+                'update' => "Updated phone " . $id
             ]);
         } catch(\Exception $ex) {
             throwException($ex);

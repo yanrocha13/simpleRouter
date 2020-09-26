@@ -5,27 +5,73 @@ namespace Demo\Controllers;
 
 use Demo\Models\Users;
 use Demo\Models\UserAddress;
+use Demo\Repository\Api\UserAddressRepositoryInterface;
+use Demo\Repository\Api\UserRepositoryInterface;
 use Pecee\Controllers\IResourceController;
 
 class UserAddressController implements IResourceController
 {
+    /**
+     * @var UserAddressRepositoryInterface
+     */
+    private $userAddressRepository;
 
+    /**
+     * @var UserRepositoryInterface
+     */
+    private $userRepository;
+
+    /**
+     * UserAddressController constructor.
+     * @param UserAddressRepositoryInterface $userAddressRepository
+     */
+    public function __construct(UserAddressRepositoryInterface $userAddressRepository, UserRepositoryInterface $userRepository)
+    {
+        $this->userAddressRepository = $userAddressRepository;
+        $this->userRepository = $userRepository;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function index(): ?string
+    {
+        return response()->json([
+            'Nada'
+        ]);
+    }
+
+    /**
+     * @param mixed $id
+     * @return string|null
+     */
     public function show($id): ?string
     {
-        // TODO: Implement show() method.
+        $addressList = $this->userAddressRepository->find($id);
+        return response()->json([
+            'show' => $addressList
+        ]);
     }
 
+    /**
+     * @return string|null
+     */
     public function create(): ?string
     {
-        // TODO: Implement create() method.
+        return response()->json([
+            'Nada'
+        ]);
     }
 
+    /**
+     * @return string|null
+     */
     public function store(): ?string
     {
         try{
             //TODO PASS LOCAL USER_ID IN PLACE OF USER EMAIL.
             $request = input()->all();
-            $user = Users::where('email',xorEncrypt($request['email']))->first();
+            $user = $this->userRepository->whereFirst('email',xorEncrypt($request['email']));
 
             if(isset($user)){
                 $create = [ 'user_id'=> $user->id,
@@ -34,7 +80,7 @@ class UserAddressController implements IResourceController
                     'number' => xorEncrypt($request['number']),
                     'reference' => xorEncrypt($request['reference']),
                     'observation' => xorEncrypt($request['observation'])];
-                $address = UserAddress::create($create);
+                $address = $this->userAddressRepository->create($create);
                 return response()->json([
                     'Success' => "Address added to user " . $user->id
                 ]);
@@ -51,26 +97,54 @@ class UserAddressController implements IResourceController
         }
     }
 
-
+    /**
+     * @param mixed $id
+     * @return string|null
+     */
     public function edit($id): ?string
     {
-        // TODO: Implement edit() method.
+        $addressList = $this->userAddressRepository->find($id);
+        return response()->json([
+            'edit' => $addressList
+        ]);
     }
 
+    /**
+     * @param mixed $id
+     * @return string|null
+     */
     public function update($id): ?string
     {
-        // TODO: Implement update() method.
+        try{
+            $request = input()->all();
+            $update = ['cep' => xorEncrypt($request['cep']),
+                'address' => xorEncrypt($request['address']),
+                'number' => xorEncrypt($request['number']),
+                'reference' => xorEncrypt($request['reference']),
+                'observation' => xorEncrypt($request['observation'])];
+            $user = $this->userAddressRepository->update($id, $update);
+
+            return response()->json([
+                'update' => "Updated address " . $id
+            ]);
+        } catch(\Exception $ex) {
+            throwException($ex);
+        }
     }
 
+    /**
+     * @param mixed $id
+     * @return string|null
+     */
     public function destroy($id): ?string
     {
-        // TODO: Implement destroy() method.
-    }
-
-    public function index(): ?string
-    {
-        return response()->json([
-            'Nada'
-        ]);
+        try{
+            $destroy = $this->userAddressRepository->remove($id);
+            return response()->json([
+                'destroy' => 'Address removed!'
+            ]);
+        } catch(\Exception $ex) {
+            throwException($ex);
+        }
     }
 }
