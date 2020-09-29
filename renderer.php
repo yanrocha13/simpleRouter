@@ -1,6 +1,16 @@
 <?php
 
-$loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/app/views');
-$twig = new \Twig\Environment($loader, []);
+namespace Demo\Models;
 
-return $twig;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
+
+Class Renderer
+{
+    public function render(){
+        $loader = new FilesystemLoader(__DIR__ . '/app/views');
+        $twig = new Environment($loader, []);
+
+        return $twig;
+    }
+}

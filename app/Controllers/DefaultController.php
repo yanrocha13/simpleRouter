@@ -2,8 +2,10 @@
 namespace Demo\Controllers;
 
 
+use Demo\Models\Renderer;
 use Demo\Repository\AuthRepository;
 use Demo\Models\Users;
+use Twig\Environment;
 
 class DefaultController
 {
@@ -13,11 +15,18 @@ class DefaultController
      */
     private $auth;
 
+    /**
+     * @var Renderer
+     */
+    private $twig;
+
     public function __construct(
-        AuthRepository $auth
+        AuthRepository $auth,
+        Renderer $twig
     )
     {
         $this->auth = $auth;
+        $this->twig = $twig;
     }
 
     public function authentication(){
@@ -34,11 +43,9 @@ class DefaultController
     }
 
 
-	public function home(): string
+	public function home()
 	{
-		// implement
-		return response()->json([
-        'Error' => $_COOKIE["authentication"]]);
+		return $this->twig->render()->render('/Users/Index.html',[null]);
 	}
 
 	public function contact(): string
