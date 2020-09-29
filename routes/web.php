@@ -24,13 +24,14 @@ Router::group(['namespace' => '\Demo\Controllers', 'exceptionHandler' => \Demo\H
 	Router::basic('/companies/{id?}', 'DefaultController@companies')->setName('companies');
 
     Router::group(['prefix' => '/view'], function () {
+        Router::get('/auth', 'DefaultController@auth');
         Router::group(['prefix' => '/show'], function () {
             Router::get('/user', 'UsersController@renderShow');
             Router::get('/user_account', 'DefaultController@home');
             Router::get('/user_account/transactions', 'DefaultController@home');
         });
         Router::group(['prefix' => '/create'], function () {
-            Router::get('/user', 'DefaultController@home');
+            Router::get('/user', 'UsersController@renderCreate');
             Router::get('/user_account/transactions', 'DefaultController@home');
         });
         Router::group(['prefix' => '/edit'], function () {

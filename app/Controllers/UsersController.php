@@ -101,6 +101,11 @@ class UsersController implements IResourceController
         ]);
     }
 
+    public function renderCreate()
+    {
+        return $this->twig->render()->render('/Users/Create.html',[null]);
+    }
+
     /**
      * @return string|null
      */

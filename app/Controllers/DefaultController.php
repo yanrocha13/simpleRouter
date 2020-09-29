@@ -42,6 +42,10 @@ class DefaultController
         }
     }
 
+    public function auth()
+    {
+        return $this->twig->render()->render('/auth/auth.html',[null]);
+    }
 
 	public function home()
 	{

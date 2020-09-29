@@ -20,18 +20,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aac28da5-1c86-4ba4-9aef-9e63b6bd8d9e" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/app/views/Users/Create.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/views/auth/auth.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Controllers/DefaultController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Controllers/DefaultController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Controllers/UsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Controllers/UsersController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repository/Api/UserAccountRepositoryInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repository/Api/UserAccountRepositoryInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repository/Api/UserAddressRepositoryInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repository/Api/UserAddressRepositoryInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repository/Api/UserPhoneRepositoryInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repository/Api/UserPhoneRepositoryInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repository/Api/UserRepositoryInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repository/Api/UserRepositoryInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repository/UserAccountRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repository/UserAccountRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repository/UserAddressRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repository/UserAddressRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repository/UserPhoneRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repository/UserPhoneRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repository/UsersRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repository/UsersRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/helpers.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/helpers.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/Users/Index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/Users/Index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/template/template.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/template/template.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -128,17 +122,17 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/test/unit" />
+      <recent name="$PROJECT_DIR$/etc" />
+      <recent name="$PROJECT_DIR$/app/Repository" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/app/Repository/Api" />
       <recent name="$PROJECT_DIR$/app/Repository" />
       <recent name="$PROJECT_DIR$/app/Controllers" />
       <recent name="$PROJECT_DIR$/app/Handlers" />
       <recent name="$PROJECT_DIR$/app/Middlewares" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/test/unit" />
-      <recent name="$PROJECT_DIR$/etc" />
-      <recent name="$PROJECT_DIR$/app/Repository" />
     </key>
   </component>
   <component name="RunManager">
@@ -179,7 +173,7 @@
       <workItem from="1601233090740" duration="3137000" />
       <workItem from="1601297045270" duration="4000" />
       <workItem from="1601298201750" duration="2000" />
-      <workItem from="1601348607437" duration="11073000" />
+      <workItem from="1601348607437" duration="13714000" />
     </task>
     <servers />
   </component>

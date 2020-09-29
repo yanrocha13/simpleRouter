@@ -1,0 +1,167 @@
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v3.8.5">
+    <title>Signin Template · Bootstrap</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/sign-in/">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
+    <style>
+        body {
+            background-color: #f5f5f5;
+        }
+
+        .form-signin {
+            width: 100%;
+            max-width: 70vw;
+            padding: 15px ;
+            margin: auto;
+        }
+
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="signin.css" rel="stylesheet">
+</head>
+<body class="text-center">
+    <div class="container form-signin">
+        <div class=" text-center">
+            <h1>Cadastrar Usuario</h1>
+        </div>
+
+                <div class="needs-validation" novalidate="">
+                    <h4 class="mb-3">Dados basicos</h4>
+                    <div class="mb-3">
+                        <label for="name">Nome / Razão Social</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="name" name="name" required="">
+                            <div class="invalid-feedback" style="width: 100%;">
+                                Your username is required.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" required="">
+                        <div class="invalid-feedback">
+                            Please enter a valid email address for shipping updates.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" required="">
+                        <div class="invalid-feedback">
+                            Please enter a valid email address for shipping updates.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="identification">CPF / CNPJ</label>
+                        <input type="text" class="form-control" id="identification" name="identification" required="">
+                        <div class="invalid-feedback">
+                            Please enter a valid email address for shipping updates.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="registration">RG / Inscrição Estadual</label>
+                        <input type="text" class="form-control" id="registration" name="registration" required="">
+                        <div class="invalid-feedback">
+                            Please enter a valid email address for shipping updates.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="birth_date">Data de Nascimento</label>
+                        <input type="date" class="form-control" id="birth_date" name="birth_date" required="">
+                        <div class="invalid-feedback">
+                            Please enter a valid email address for shipping updates.
+                        </div>
+                    </div>
+
+                    <hr class="mt-4">
+                    <h4 class="mb-3">Dados de Endereço</h4>
+                    <div class="mb-3">
+                        <label for="address">Endereço</label>
+                        <input type="text" class="form-control" id="address" name="address" required="">
+                        <div class="invalid-feedback">
+                            Please enter your shipping address.
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5 mb-3">
+                            <label for="number">Numero</label>
+                            <input type="text" class="form-control" id="number" name="number" required="">
+                            <div class="invalid-feedback">
+                                Please enter your shipping address.
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="reference">Referência</label>
+                            <input type="text" class="form-control" id="reference" name="reference" required="">
+                            <div class="invalid-feedback">
+                                Please enter your shipping address.
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="CEP">CEP</label>
+                            <input type="text" class="form-control" id="CEP" name="CEP" required="">
+                            <div class="invalid-feedback">
+                                Zip code required.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="observation">Observação</label>
+                        <input type="text" class="form-control" id="observation" name="observation" required="">
+                        <div class="invalid-feedback">
+                            Please enter your shipping address.
+                        </div>
+                    </div>
+
+                    <hr class="mb-4">
+                    <h4 class="mb-3">Dados de Contato</h4>
+                    <div class="mb-3">
+                        <label for="phone">Telefone</label>
+                        <input type="text" class="form-control" id="phone" name="phone" required="">
+                        <div class="invalid-feedback">
+                            Please enter your shipping address.
+                        </div>
+                    </div>
+                    <hr class="mb-4">
+                    <button id="btnSave" class="btn btn-primary btn-lg btn-block" type="submit">Cadastrar</button>
+                </div>
+            </div>
+
+    <footer class="pt-2 text-muted text-center text-small">
+            <p class="mb-1">© 2017-2019 Company Name</p>
+            <ul class="list-inline">
+                <li class="list-inline-item"><a href="#">Privacy</a></li>
+                <li class="list-inline-item"><a href="#">Terms</a></li>
+                <li class="list-inline-item"><a href="#">Support</a></li>
+            </ul>
+        </footer>
+
+</body>
+</html>
