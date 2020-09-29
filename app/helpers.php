@@ -121,3 +121,17 @@ function xorEncrypt($value, $type = "encrypt")
 
     return $result;
 }
+
+function helperDecryptArray($value, $arrayDefinition, $key = 'simplerouter')
+{
+    $result = [];
+    foreach($value as $key => $item){
+        if($key == 'id'){
+            $result = array_merge($result, [$key => $item]);
+        }
+        else if(in_array($key,$arrayDefinition)){
+            $result = array_merge($result,[$key => xorEncrypt($item,'decrypt')]);
+        }
+    }
+    return $result;
+}

@@ -17,4 +17,6 @@ interface UserRepositoryInterface
 
     public function remove($id);
     public function whereFirstWithRelation($parameter, $data, $relation = null);
+
+    public function getFirstUserDecrypted($parameter, $data);
 }

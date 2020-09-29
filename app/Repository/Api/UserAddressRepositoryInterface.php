@@ -16,4 +16,6 @@ interface UserAddressRepositoryInterface
     public function update($id, $update);
 
     public function remove($id);
+
+    public function getAddressListDecrypted($parameter, $data);
 }

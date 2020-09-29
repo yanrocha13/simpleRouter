@@ -16,4 +16,6 @@ interface UserPhoneRepositoryInterface
     public function update($id, $update);
 
     public function remove($id);
+
+    public function getPhoneListDecrypted($parameter, $data);
 }

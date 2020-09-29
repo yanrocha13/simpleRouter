@@ -46,4 +46,16 @@ class UserPhoneRepository implements UserPhoneRepositoryInterface
     public function remove($id){
         return $this->userPhone->find($id)->delete();
     }
+
+    public function getPhoneListDecrypted($parameter, $data)
+    {
+        $phoneList = $this->userPhone->where($parameter,$data)->get();
+        $decrypt = ['phone'];
+        $phone = [];
+        foreach($phoneList as $key => $phonei){
+            $phone = array_merge($phone , [$phonei->id => helperDecryptArray($phonei->getAttributes(), $decrypt)]);
+        }
+
+        return ['phone' => $phone];
+    }
 }

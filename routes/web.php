@@ -25,7 +25,7 @@ Router::group(['namespace' => '\Demo\Controllers', 'exceptionHandler' => \Demo\H
 
     Router::group(['prefix' => '/view'], function () {
         Router::group(['prefix' => '/show'], function () {
-            Router::get('/user', 'DefaultController@home');
+            Router::get('/user', 'UsersController@renderShow');
             Router::get('/user_account', 'DefaultController@home');
             Router::get('/user_account/transactions', 'DefaultController@home');
         });

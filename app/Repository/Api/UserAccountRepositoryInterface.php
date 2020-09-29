@@ -13,4 +13,5 @@ interface UserAccountRepositoryInterface
     public function transfer($transaction);
     public function deposit($transaction);
     public function whereFirst($parameter, $data);
+    public function getUserAccountDecrypted($parameter, $data);
 }

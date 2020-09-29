@@ -118,4 +118,14 @@ class UserAccountRepository implements UserAccountRepositoryInterface
             return false;
         }
     }
+
+    public function getUserAccountDecrypted($parameter, $data)
+    {
+        $userAccount = $this->whereFirst('user_id',5);
+
+        $decrypt = ['account_number',
+            'funds'];
+
+        return helperDecryptArray($userAccount->getAttributes(), $decrypt);
+    }
 }

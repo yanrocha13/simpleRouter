@@ -77,4 +77,16 @@ class UsersRepository implements UserRepositoryInterface
     public function remove($id){
         return null;
     }
+
+    public function getFirstUserDecrypted($parameter, $data){
+        $user = $this->whereFirst('id',5);
+
+        $decrypt = ['email',
+            'name',
+            'identification',
+            'registration',
+            'birth_date'];
+
+        return helperDecryptArray($user->getAttributes(), $decrypt);
+    }
 }

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Demo\Controllers;
 
+use Demo\Models\Renderer;
 use Demo\Repository\Api\UserAccountRepositoryInterface;
 use Demo\Repository\Api\UserAddressRepositoryInterface;
 use Demo\Repository\Api\UserPhoneRepositoryInterface;
@@ -33,21 +34,29 @@ class UsersController implements IResourceController
     private $userAddressRepository;
 
     /**
+     * @var Renderer
+     */
+    private $twig;
+
+    /**
      * UsersController constructor.
      * @param UserRepositoryInterface $usersRepository
      * @param UserAccountRepositoryInterface $userAccountRepository
      * @param UserPhoneRepositoryInterface $userPhoneRepository
      * @param UserAddressRepositoryInterface $userAddressRepository
+     * @param Renderer $twig
      */
     public function __construct(UserRepositoryInterface $usersRepository,
                                 UserAccountRepositoryInterface $userAccountRepository,
                                 UserPhoneRepositoryInterface $userPhoneRepository,
-                                UserAddressRepositoryInterface $userAddressRepository)
+                                UserAddressRepositoryInterface $userAddressRepository,
+                                Renderer $twig)
     {
         $this->usersRepository = $usersRepository;
         $this->userAccountRepository = $userAccountRepository;
         $this->userPhoneRepository = $userPhoneRepository;
         $this->userAddressRepository = $userAddressRepository;
+        $this->twig = $twig;
     }
 
     /**
@@ -67,6 +76,18 @@ class UsersController implements IResourceController
     {
         $user = $this->usersRepository->find($id);
         return response()->json(['show' => $user]);
+    }
+
+    public function renderShow()
+    {
+        $user = $this->usersRepository->getFirstUserDecrypted('id',5);
+        $phone = $this->userPhoneRepository->getPhoneListDecrypted('user_id',5);
+        $address = $this->userAddressRepository->getAddressListDecrypted('user_id',5);
+        $account = $this->userAccountRepository->getUserAccountDecrypted('user_id',5);
+
+        $fulldata = array_merge($user, $phone, $address, $account);
+
+        return $this->twig->render()->render('/Users/Index.html',$fulldata);
     }
 
     /**

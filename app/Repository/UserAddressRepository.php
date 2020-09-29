@@ -46,4 +46,20 @@ class UserAddressRepository implements UserAddressRepositoryInterface
     public function remove($id){
         return $this->userAddress->find($id)->delete();
     }
+
+    public function getAddressListDecrypted($parameter, $data)
+    {
+        $addressList = $this->userAddress->where($parameter,$data)->get();
+        $decrypt = ['CEP',
+                    'address',
+                    'number',
+                    'reference',
+                    'observation'];
+        $address = [];
+        foreach($addressList as $key => $addressi){
+            $address = array_merge($address , [$addressi->id => helperDecryptArray($addressi->getAttributes(), $decrypt)]);
+        }
+
+        return ['address' => $address];
+    }
 }
