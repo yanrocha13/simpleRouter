@@ -147,4 +147,12 @@ class AccountTransactionRepository implements AccountTransactionRepositoryInterf
 
         return $result;
     }
+
+    /**
+     * @return AccountTransactions[]|Collection
+     */
+    public function listById($id){
+        $userAccount = $this->userAccountRepository->whereFirst('user_id',$id);
+        return $this->accountTransactions->where('account_origin_id',$userAccount->id)->get();
+    }
 }

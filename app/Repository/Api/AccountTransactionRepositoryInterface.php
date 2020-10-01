@@ -20,4 +20,7 @@ interface AccountTransactionRepositoryInterface
     public function defineTransaction($request);
 
     public function executeTransaction($transaction);
+
+    public function listById($userId);
+
 }

@@ -1,63 +1,133 @@
 {% extends "/template/template.html" %}
 {% block content %}
 <div>
-    <div class="card mb-4 shadow-sm p-auto">
-        <div class="card-header text-center">
-            <h4 class="my-0 font-weight-normal">{{name}}</h4>
+    <div class="container form-signin">
+        <div class=" text-center">
+            <h1>Transação</h1>
         </div>
-        <div class="card-body">
-            <h3 class="card-title pricing-card-title text-center mb-0"><small class="text-muted">conta</small> {{account_number}}</h3>
-            <h1 class="card-title pricing-card-title text-center"><small class="text-muted">SALDO</small> ${{funds}}</h1>
 
-            <div class="card-deck my-4">
-                <div class="card">
-                    <div class="card-header text-center">
-                        <h4 class="mb-0">Dados</h4>
-                    </div>
-                    <div class="card-body">
-                        <p><b>Email:</b> {{email}}</p>
-                        <p><b>Identificação:</b> {{identification}}</p>
-                        <p><b>Registro:</b> {{registration}}</p>
-                        <p><b>Data de Nascimento:</b> {{birth_date}}</p>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header text-center">
-                        <h4 class="mb-0">Telefones</h4>
-                    </div>
-                    <div class="card-body">
-                        <ol>
-                        {% for item in phone %}
-                        <li class="my-2">{{item['phone']}}</li>
-                        {%endfor%}
-                        </ol>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header text-center">
-                        <h4 class="mb-0">Endereço</h4>
-                    </div>
-                    <div class="card-body">
-                        <ul class="mt-3 mb-4">
-                            {% for item in address %}
-                            <li><b>Endereço: </b>{{item['address']}}
-                                <ul>
-                                    <li><b>Numebro: </b>{{item['number']}}</li>
-                                    <li><b>Referencia: </b>{{item['reference']}}</li>
-                                    <li><b>Observação: </b>{{item['observation']}}</li>
-                                </ul>
-                            </li>
-                            {%endfor%}
-                        </ul>
-                    </div>
-                </div>
-
+        <div class="mb-3">
+            <label for="transaction_type" style="font-size: 26px; font-weight: 500">Tipo de Transação</label>
+            <div class="input-group">
+                <select class="form-control" id="transaction_type" name="transaction_type" required="">
+                    <option value="0">Selecione um tipo de transação</option>
+                    <option value="1">Depósito</option>
+                    <option value="2">Transferência</option>
+                    <option value="3">Saque</option>
+                </select>
+            </div>
+            <div class="invalid-feedback" style="width: 100%;">
+                Your username is required.
             </div>
 
-            <button type="button" class="btn btn-lg btn-block btn-primary">Get started</button>
+            <div id="card_transaction" class="card mt-5" style="display: none">
+                <div id="card_transaction_header" class="card-header text-center">
+                            <!-- DINAMICO -->
+                </div>
+                <div id="card_transaction_body_deposit" class="card-body" style="display: none">
+                    <div class="mb-3">
+                        <label for="deposit">Valor do depósito</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="deposit" name="deposit" required="">
+                            <div class="invalid-feedback" style="width: 100%;">
+                                Your username is required.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="card_transaction_body_transfer" class="card-body" style="display: none">
+                    <div class="mb-3">
+                        <label for="transfer">Valor a ser transferido</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="transfer" name="transfer" required="">
+                            <div class="invalid-feedback" style="width: 100%;">
+                                Your username is required.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="account_destination">Conta de destino</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="account_destination" name="account_destination" required="">
+                            <div class="invalid-feedback" style="width: 100%;">
+                                Your username is required.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="card_transaction_body_withdraw" class="card-body" style="display: none">
+                    <div class="mb-3">
+                        <label for="withdraw">Valor a ser sacado</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="withdraw" name="withdraw" required="">
+                            <div class="invalid-feedback" style="width: 100%;">
+                                Your username is required.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="card_transaction_footer_deposit" class="card-footer" style="display: none">
+                    <span class="btn btn-success float-right" style="cursor:pointer;">Depositar <i class="fas fa-check"></i></span>
+                </div>
+                <div id="card_transaction_footer_transfer" class="card-footer" style="display: none">
+                    <span class="btn btn-success float-right" style="cursor:pointer;">Transferir <i class="fas fa-check"></i></span>
+                </div>
+                <div id="card_transaction_footer_withdraw" class="card-footer" style="display: none">
+                    <span class="btn btn-success float-right" style="cursor:pointer;">Sacar <i class="fas fa-check"></i></span>
+            </div>
         </div>
+
     </div>
 </div>
+{% endblock %}
+{% block script %}
+<script>
+    $('#transaction_type').change(function(){
+        $('#card_transaction').show();
+        let type = $('#transaction_type').val();
+        switch (type) {
+            case '0':
+                $('#card_transaction').hide();
+                $('#card_transaction_header').html("")
+                $('#card_transaction_body_deposit').hide()
+                $('#card_transaction_body_transfer').hide()
+                $('#card_transaction_body_withdraw').hide()
+                $('#card_transaction_footer_deposit').hide()
+                $('#card_transaction_footer_transfer').hide()
+                $('#card_transaction_footer_withdraw').hide()
+                break;
+            case '1':
+                $('#card_transaction_header').html("<h4>Depósito</h4>")
+                $('#card_transaction_body_deposit').show()
+                $('#card_transaction_body_transfer').hide()
+                $('#card_transaction_body_withdraw').hide()
+                $('#card_transaction_footer_deposit').show()
+                $('#card_transaction_footer_transfer').hide()
+                $('#card_transaction_footer_withdraw').hide()
+                console.log(type)
+                break;
+            case '2':
+                $('#card_transaction_header').html('<h4>Transferência</h4>')
+                $('#card_transaction_body_deposit').hide()
+                $('#card_transaction_body_transfer').show()
+                $('#card_transaction_body_withdraw').hide()
+                $('#card_transaction_footer_deposit').hide()
+                $('#card_transaction_footer_transfer').show()
+                $('#card_transaction_footer_withdraw').hide()
+                console.log(type)
+                break;
+            case '3':
+                $('#card_transaction_header').html('<h4>Saque</h4>')
+                $('#card_transaction_body_deposit').hide()
+                $('#card_transaction_body_transfer').hide()
+                $('#card_transaction_body_withdraw').show()
+                $('#card_transaction_footer_deposit').hide()
+                $('#card_transaction_footer_transfer').hide()
+                $('#card_transaction_footer_withdraw').show()
+                console.log(type)
+                break;
+        }
+    })
+</script>
 {% endblock %}

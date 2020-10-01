@@ -21,13 +21,13 @@ Router::group(['namespace' => '\Demo\Controllers', 'exceptionHandler' => \Demo\H
     Router::group(['prefix' => '/view'], function () {
         Router::get('/auth', 'DefaultController@auth');
         Router::group(['prefix' => '/show'], function () {
+            Router::get('/transaction', 'AccountTransactionsController@viewIndex');
             Router::get('/user', 'UsersController@renderShow');
             Router::get('/user_account', 'DefaultController@home');
-            Router::get('/user_account/transactions', 'DefaultController@home');
         });
         Router::group(['prefix' => '/create'], function () {
             Router::get('/user', 'UsersController@renderCreate');
-            Router::get('/user_account/transactions', 'DefaultController@home');
+            Router::get('/transaction', 'AccountTransactionsController@create');
         });
         Router::group(['prefix' => '/edit'], function () {
             Router::get('/user', 'DefaultController@home');
@@ -86,7 +86,7 @@ Router::group(['namespace' => '\Demo\Controllers', 'prefix' => '/error','excepti
 
 Router::error(function(Request $request, Exception $exception) {
     if($exception instanceof NotFoundHttpException && $exception->getCode() === 404) {
-        response()->redirect('/error/not-found');
+//        response()->redirect('/error/not-found');
     }
 
 });
