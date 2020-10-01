@@ -4,6 +4,8 @@
  */
 
 use Demo\Router;
+use Pecee\Http\Request;
+use Pecee\SimpleRouter\Exceptions\NotFoundHttpException;
 
 
 $container = (new \DI\ContainerBuilder())
@@ -16,13 +18,6 @@ Router::enableDependencyInjection($container);
 Router::csrfVerifier(new \Demo\Middlewares\CsrfVerifier());
 
 Router::group(['namespace' => '\Demo\Controllers', 'exceptionHandler' => \Demo\Handlers\CustomExceptionHandler::class], function () {
-
-	Router::get('/', 'DefaultController@home')->setName('home');
-
-	Router::get('/contact', 'DefaultController@contact')->setName('contact');
-
-	Router::basic('/companies/{id?}', 'DefaultController@companies')->setName('companies');
-
     Router::group(['prefix' => '/view'], function () {
         Router::get('/auth', 'DefaultController@auth');
         Router::group(['prefix' => '/show'], function () {
@@ -81,16 +76,17 @@ Router::group(['namespace' => '\Demo\Controllers', 'exceptionHandler' => \Demo\H
 
         });
 	});
+});
 
+Router::group(['namespace' => '\Demo\Controllers', 'prefix' => '/error','exceptionHandler' => \Demo\Handlers\CustomExceptionHandler::class], function () {
 
-    // CALLBACK EXAMPLES
+    Router::get('/not-found', 'DefaultController@notFound');
 
-    Router::get('/foo', function() {
-        return 'foo';
-    });
+});
 
-    Router::get('/foo-bar', function() {
-        return 'foo-bar';
-    });
+Router::error(function(Request $request, Exception $exception) {
+    if($exception instanceof NotFoundHttpException && $exception->getCode() === 404) {
+        response()->redirect('/error/not-found');
+    }
 
 });

@@ -64,7 +64,7 @@ class DefaultController
 
     public function notFound(): string
     {
-        return 'Page not found';
+        return $this->twig->render()->render('/error/404.html',[null]);
     }
 
 }
