@@ -50,34 +50,70 @@ class UsersRepository implements UserRepositoryInterface
         $this->userAccountRepository = $userAccountRepository;
     }
 
+    /**
+     * @param $parameter
+     * @param $data
+     * @return mixed
+     */
     public function whereFirst($parameter, $data){
         return $this->users->where($parameter,$data)->first();
     }
 
+    /**
+     * @param $parameter
+     * @param $data
+     * @param null $relation
+     * @return mixed
+     */
     public function whereFirstWithRelation($parameter, $data, $relation = null){
         return $this->users->where($parameter,$data)->with($relation)->first();
     }
 
+    /**
+     * @param $user
+     * @return mixed
+     */
     public function create($user){
         return $this->users->create($user);
     }
 
+    /**
+     * @return Users[]|\Illuminate\Database\Eloquent\Collection
+     */
     public function list(){
         return $this->users->all();
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function find($id){
         return $this->users->find($id);
     }
 
+    /**
+     * @param $id
+     * @param $update
+     * @return mixed
+     */
     public function update($id, $update){
         return $this->users->where('id',$id)->update($update);
     }
 
+    /**
+     * @param $id
+     * @return null
+     */
     public function remove($id){
         return null;
     }
 
+    /**
+     * @param $parameter
+     * @param $data
+     * @return array
+     */
     public function getFirstUserDecrypted($parameter, $data){
         $user = $this->whereFirst('id',5);
 

@@ -3,9 +3,8 @@ declare(strict_types=1);
 
 namespace Demo\Repository;
 
+use DateTime;
 use Demo\Models\AccountTransactions;
-use Demo\Models\UserAccount;
-use Demo\Models\Users;
 use Demo\Repository\Api\AccountTransactionRepositoryInterface;
 use Demo\Repository\Api\UserAccountRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
@@ -98,9 +97,7 @@ class AccountTransactionRepository implements AccountTransactionRepositoryInterf
      */
     public function defineTransaction($request){
         $transaction = [];
-        //TODO MODIFY ACCOUNT ORIGIN/DESTINATION TO CATCH WITH LOCAL USER WHEN TYPE 1/3 WHEN TYPE EQUAL 2 CATCH ACCOUNT NUMBER FROM REQUEST
-
-        $user = $this->userRepository->whereFirstWithRelation('email',xorEncrypt($request['user_email']),['account']);
+        $user = getUser();
         $date = new DateTime();
 
         switch ($request["type"]){
@@ -109,31 +106,35 @@ class AccountTransactionRepository implements AccountTransactionRepositoryInterf
                     'account_destination_id' => $user->account->id,
                     'value' => xorEncrypt($request["value"]),
                     'transaction_type' => xorEncrypt('1'),
-                    'transaction_date' => xorEncrypt($date)];
+                    'transaction_date' => xorEncrypt($date->date)];
                 break;
             case 2:
-                $destination_account = $this->userAccountRepository->whereFirst('user_account',$request['destination_account']);
+                $destination_account = $this->userAccountRepository->whereFirst('account_number',xorEncrypt($request['destination_account']));
                 $transaction = ['account_origin_id' => $user->account->id,
                     'account_destination_id' => $destination_account->id,
                     'value' => xorEncrypt($request["value"]),
                     'transaction_type' => xorEncrypt('2'),
-                    'transaction_date' => xorEncrypt($date)];
+                    'transaction_date' => xorEncrypt($date->date)];
                 break;
             case 3:
                 $transaction = ['account_origin_id' => $user->account->id,
                     'account_destination_id' => $user->account->id,
                     'value' => xorEncrypt($request["value"]),
                     'transaction_type' => xorEncrypt('3'),
-                    'transaction_date' => xorEncrypt($date)];
+                    'transaction_date' => xorEncrypt($date->date)];
                 break;
         }
 
         return $transaction;
     }
 
+    /**
+     * @param $transaction
+     * @return false
+     */
     public function executeTransaction($transaction){
         $result = false;
-        switch( $transaction["type"]){
+        switch( xorEncrypt($transaction["transaction_type"], "decrypt")){
             case 1:
                 $result = $this->userAccountRepository->deposit($transaction);
                 break;

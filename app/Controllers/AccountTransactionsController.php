@@ -71,32 +71,59 @@ class AccountTransactionsController implements IResourceController
         ]);
     }
 
+    /**
+     * @return string|null
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     */
     public function create(): ?string
     {
         return $this->twig->render()->render('/transactions/Create.html',[]);
     }
 
+    /**
+     * @return string|null
+     */
     public function store(): ?string
     {
-        // TODO: Implement store() method.
         $request = input()->all();
 
         $newTransaction = $this->accountTransaction->defineTransaction($request);
         $executeTransaction = $this->accountTransaction->executeTransaction($newTransaction);
+        if($executeTransaction){
+            $saveTransaction = $this->accountTransaction->create($newTransaction);
+        }
+
+        return response()->json([
+            'store' => $executeTransaction
+        ]);
     }
 
+    /**
+     * @param mixed $id
+     * @return string|null
+     */
     public function edit($id): ?string
     {
-        // TODO: Implement edit() method.
+        return null;
     }
 
+    /**
+     * @param mixed $id
+     * @return string|null
+     */
     public function update($id): ?string
     {
-        // TODO: Implement update() method.
+        return null;
     }
 
+    /**
+     * @param mixed $id
+     * @return string|null
+     */
     public function destroy($id): ?string
     {
-        // TODO: Implement destroy() method.
+        return null;
     }
 }

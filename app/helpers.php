@@ -1,5 +1,6 @@
 <?php
 
+use Demo\Models\Users;
 use Pecee\SimpleRouter\SimpleRouter as Router;
 use Pecee\Http\Url;
 use Pecee\Http\Response;
@@ -134,4 +135,12 @@ function helperDecryptArray($value, $arrayDefinition, $key = 'simplerouter')
         }
     }
     return $result;
+}
+
+function getUser(){
+    $user = '';
+    $AUTH = xorEncrypt($_COOKIE['authentication'], "decrypt");
+    $userAuth[] = explode(":",$AUTH);
+    $user = Users::where('email', $userAuth[0][0])->with('account')->first();
+    return $user;
 }

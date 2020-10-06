@@ -56,8 +56,22 @@
 
             </div>
 
-            <button type="button" class="btn btn-lg btn-block btn-primary">Get started</button>
+            <a type="button" href="/view/create/transaction" class="btn btn-lg btn-block btn-primary">Transações</a>
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block script %}
+
+<script>
+    $(document).ready(function(){
+        var authCookie = document.cookie.split(';')
+        console.log(authCookie[0]);
+
+        var authHeader = new Headers();
+        authHeader.set('Authorization', 'Basic ' + a);
+    })
+</script>
+
 {% endblock %}

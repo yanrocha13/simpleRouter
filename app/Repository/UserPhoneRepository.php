@@ -23,30 +23,60 @@ class UserPhoneRepository implements UserPhoneRepositoryInterface
         $this->userPhone = $userPhone;
     }
 
+    /**
+     * @param $parameter
+     * @param $data
+     * @return mixed
+     */
     public function whereFirst($parameter, $data){
         return $this->userPhone->where($parameter,$data)->first();
     }
 
+    /**
+     * @param $userPhone
+     * @return mixed
+     */
     public function create($userPhone){
         return $this->userPhone->create($userPhone);
     }
 
+    /**
+     * @return UserPhone[]|\Illuminate\Database\Eloquent\Collection
+     */
     public function list(){
         return $this->userPhone->all();
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function find($id){
         return $this->userPhone->find($id);
     }
 
+    /**
+     * @param $id
+     * @param $update
+     * @return mixed
+     */
     public function update($id, $update){
         return $this->userPhone->where('id',$id)->update($update);
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function remove($id){
         return $this->userPhone->find($id)->delete();
     }
 
+    /**
+     * @param $parameter
+     * @param $data
+     * @return array[]
+     */
     public function getPhoneListDecrypted($parameter, $data)
     {
         $phoneList = $this->userPhone->where($parameter,$data)->get();

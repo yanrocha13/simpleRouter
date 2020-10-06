@@ -20,7 +20,7 @@ Router::csrfVerifier(new \Demo\Middlewares\CsrfVerifier());
 Router::group(['namespace' => '\Demo\Controllers', 'exceptionHandler' => \Demo\Handlers\CustomExceptionHandler::class], function () {
     Router::group(['prefix' => '/view'], function () {
         Router::get('/auth', 'DefaultController@auth');
-        Router::group(['prefix' => '/show'], function () {
+        Router::group(['prefix' => '/show', 'middleware' => \Demo\Middlewares\ApiVerification::class], function () {
             Router::get('/transaction', 'AccountTransactionsController@viewIndex');
             Router::get('/user', 'UsersController@renderShow');
             Router::get('/user_account', 'DefaultController@home');
@@ -81,12 +81,13 @@ Router::group(['namespace' => '\Demo\Controllers', 'exceptionHandler' => \Demo\H
 Router::group(['namespace' => '\Demo\Controllers', 'prefix' => '/error','exceptionHandler' => \Demo\Handlers\CustomExceptionHandler::class], function () {
 
     Router::get('/not-found', 'DefaultController@notFound');
+    Router::get('/', 'DefaultController@error');
+    Router::get('/auth', 'DefaultController@authError')->name('authError');
 
 });
 
 Router::error(function(Request $request, Exception $exception) {
     if($exception instanceof NotFoundHttpException && $exception->getCode() === 404) {
-//        response()->redirect('/error/not-found');
+        response()->redirect('/error/not-found');
     }
-
 });

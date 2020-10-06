@@ -7,12 +7,17 @@ use Pecee\Http\Request;
 
 class ApiVerification implements IMiddleware
 {
+    /**
+     * @param Request $request
+     * @throws \Exception
+     */
     public function handle(Request $request) : void
     {
         // Do authentication
         try{
-            $authCookie = $_COOKIE['authentication'];
-            if(isset($authCookie)){
+            var_dump($request->getHeader('Authorization'));
+            if(isset($_COOKIE['authentication'])){
+                $authCookie = $_COOKIE['authentication'];
                 $autentication = xorEncrypt($authCookie,'decrypt');
                 $userData = explode(':',$autentication);
 
@@ -22,14 +27,14 @@ class ApiVerification implements IMiddleware
                 }
                 else{
                     $request->authenticated = false;
-                    $request->setRewriteUrl(url('/teste'));
+                    $request->setRewriteUrl(url('/error/auth'));
                 }
             }else{
                 $request->authenticated = false;
-                $request->setRewriteUrl(url('/teste'));
+                $request->setRewriteUrl(url('/error/auth'));
             }
         }catch (\Exception $ex){
-            throwException($ex);
+              throw new \Exception('$ex');
         }
     }
 

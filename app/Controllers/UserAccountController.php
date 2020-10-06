@@ -30,11 +30,18 @@ class UserAccountController implements IResourceController
         $this->userAccountRepository = $userAccountRepository;
     }
 
+    /**
+     * @return string|null
+     */
     public function index(): ?string
     {
-        // TODO: Implement index() method.
+        return null;
     }
 
+    /**
+     * @param mixed $id
+     * @return string|null
+     */
     public function show($id): ?string
     {
         $userAccount = $this->userAccountRepository->find($id);
@@ -43,28 +50,46 @@ class UserAccountController implements IResourceController
         ]);
     }
 
+    /**
+     * @return string|null
+     */
     public function create(): ?string
     {
-        // TODO: Implement create() method.
+        return null;
     }
 
+    /**
+     * @return string|null
+     */
     public function store(): ?string
     {
-        // TODO: Implement store() method.
+        return null;
     }
 
+    /**
+     * @param mixed $id
+     * @return string|null
+     */
     public function edit($id): ?string
     {
-        // TODO: Implement edit() method.
+        return null;
     }
 
+    /**
+     * @param mixed $id
+     * @return string|null
+     */
     public function update($id): ?string
     {
-        // TODO: Implement update() method.
+        return null;
     }
 
+    /**
+     * @param mixed $id
+     * @return string|null
+     */
     public function destroy($id): ?string
     {
-        // TODO: Implement destroy() method.
+        return null;
     }
 }

@@ -5,6 +5,7 @@ namespace Demo\Repository;
 
 use Demo\Models\UserAccount;
 use Demo\Repository\Api\UserAccountRepositoryInterface;
+use Demo\Repository\Api\UserRepositoryInterface;
 
 class UserAccountRepository implements UserAccountRepositoryInterface
 {
@@ -22,10 +23,18 @@ class UserAccountRepository implements UserAccountRepositoryInterface
         $this->userAccount = $userAccount;
     }
 
+    /**
+     * @param $userAccount
+     * @return mixed
+     */
     public function create($userAccount){
         return $this->userAccount->create($userAccount);
     }
 
+    /**
+     * @param $user
+     * @return string
+     */
     public function createAccountNumber($user){
         $accountNumber = "";
         $accountNumber .= strval($user->id);
@@ -35,32 +44,50 @@ class UserAccountRepository implements UserAccountRepositoryInterface
         return  $accountNumber;
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function remove($id){
         return $this->userAccount->find($id)->delete();
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function find($id)
     {
         return $this->userAccount->find($id);
     }
 
+    /**
+     * @param $parameter
+     * @param $data
+     * @return mixed
+     */
     public function whereFirst($parameter, $data){
         return $this->userAccount->where($parameter,$data)->first();
     }
 
+    /**
+     * @param $transaction
+     * @return bool
+     */
     public function deposit($transaction){
         try{
-            //TODO CHANGE USER ACCOUNT CATCH TO LOCAL USER ID
-            $userAccount = $this->whereFirst('account_number',xorEncrypt($transaction['account_destination_id']));
+            $user = getUser();
+            $userAccount = $this->whereFirst('user_id',$user->id);
             $funds = xorEncrypt($userAccount->funds,'decrypt');
 
             if($funds == "0.00"){
                 $funds = $transaction["value"];
             }else{
-                $funds = $transaction["value"] + $funds;
+                $newFunds = (int)xorEncrypt($transaction["value"],"decrypt") + (int)$funds;
+                $funds = xorEncrypt(strval($newFunds));
             }
 
-            $userAccount->funds = xorEncrypt($funds);
+            $userAccount->funds = $funds;
             $userAccount->save();
             return true;
 
@@ -69,24 +96,30 @@ class UserAccountRepository implements UserAccountRepositoryInterface
         }
     }
 
+    /**
+     * @param $transaction
+     * @return bool
+     */
     public function transfer($transaction){
         try{
-            //TODO CHANGE USER ACCOUNT CATCH TO LOCAL USER ID
-            $originAccount = $this->whereFirst('account_number',xorEncrypt($transaction['account_origin_id']));
+            $user = getUser();
+            $originAccount = $this->whereFirst('user_id',$user->id);
             $originFunds = xorEncrypt($originAccount->funds,'decrypt');
 
-            $destinationAccount = $this->whereFirst('account_number',xorEncrypt($transaction['account_destination_id']));
+            $destinationAccount = $this->whereFirst('id',$transaction['account_destination_id']);
             $destinationFunds = xorEncrypt($destinationAccount->funds,'decrypt');
 
-            if($originFunds == "0.00" || $originFunds - $transaction["value"] == 0){
+            $transaction["value"] = xorEncrypt($transaction["value"], "decrypt");
+
+            if($originFunds == "0.00" || (int)$originFunds - (int)$transaction["value"] <= 0){
                 return false;
             }else{
                 $destinationFunds = $destinationFunds + $transaction["value"];
                 $originFunds = $originFunds - $transaction["value"];
             }
 
-            $originAccount->funds = xorEncrypt($originFunds);
-            $destinationAccount->funds = xorEncrypt($destinationFunds);
+            $originAccount->funds = xorEncrypt(strval($originFunds));
+            $destinationAccount->funds = xorEncrypt(strval($destinationFunds));
 
             $originAccount->save();
             $destinationAccount->save();
@@ -98,19 +131,24 @@ class UserAccountRepository implements UserAccountRepositoryInterface
         }
     }
 
+    /**
+     * @param $transaction
+     * @return bool
+     */
     public function withdraw($transaction){
         try{
-            //TODO CHANGE USER ACCOUNT CATCH TO LOCAL USER ID
-            $userAccount = $this->whereFirst('account_number',xorEncrypt($transaction['account_destination_id']));
-            $funds = xorEncrypt($userAccount->funds,'decrypt');
+            $user = getUser();
+            $userAccount = $this->whereFirst('user_id',$user->id);
+            $funds = xorEncrypt($user->account->funds,'decrypt');
+            $transaction["value"] = xorEncrypt($transaction["value"], "decrypt");
 
-            if($funds == "0.00" || $funds - $transaction["value"] == 0){
+            if($funds == "0.00" || (int)$funds - (int)$transaction["value"] <= 0){
                 return false;
             }else{
-                $funds = $funds - $transaction["value"];
+                $funds = (int)$funds - (int)$transaction["value"];
             }
 
-            $userAccount->funds = xorEncrypt($funds);
+            $userAccount->funds = xorEncrypt(strval($funds));
             $userAccount->save();
             return true;
 
@@ -119,6 +157,11 @@ class UserAccountRepository implements UserAccountRepositoryInterface
         }
     }
 
+    /**
+     * @param $parameter
+     * @param $data
+     * @return array
+     */
     public function getUserAccountDecrypted($parameter, $data)
     {
         $userAccount = $this->whereFirst('user_id',5);

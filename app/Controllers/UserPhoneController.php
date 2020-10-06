@@ -67,7 +67,6 @@ class UserPhoneController implements IResourceController
     public function store(): ?string
     {
         try{
-            //TODO PASS LOCAL USER_ID IN PLACE OF USER EMAIL.
             $request = input()->all();
             $user = $this->usersRepository->whereFirst('email',xorEncrypt($request['email']));
 

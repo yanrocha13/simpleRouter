@@ -78,12 +78,19 @@ class UsersController implements IResourceController
         return response()->json(['show' => $user]);
     }
 
+    /**
+     * @return string
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     */
     public function renderShow()
     {
-        $user = $this->usersRepository->getFirstUserDecrypted('id',5);
-        $phone = $this->userPhoneRepository->getPhoneListDecrypted('user_id',5);
-        $address = $this->userAddressRepository->getAddressListDecrypted('user_id',5);
-        $account = $this->userAccountRepository->getUserAccountDecrypted('user_id',5);
+        $authUser = getUser();
+        $user = $this->usersRepository->getFirstUserDecrypted('id',$authUser->id);
+        $phone = $this->userPhoneRepository->getPhoneListDecrypted('user_id',$authUser->id);
+        $address = $this->userAddressRepository->getAddressListDecrypted('user_id',$authUser->id);
+        $account = $this->userAccountRepository->getUserAccountDecrypted('user_id',$authUser->id);
 
         $fulldata = array_merge($user, $phone, $address, $account);
 
@@ -95,12 +102,17 @@ class UsersController implements IResourceController
      */
     public function create(): ?string
     {
-        //TODO RETURN BLADE?
         return response()->json([
             'blade' => 'create user blade'
         ]);
     }
 
+    /**
+     * @return string
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     */
     public function renderCreate()
     {
         return $this->twig->render()->render('/Users/Create.html',[null]);
@@ -163,12 +175,20 @@ class UsersController implements IResourceController
         }
     }
 
+    /**
+     * @param mixed $id
+     * @return string|null
+     */
     public function edit($id): ?string
     {
         $user = $this->usersRepository->find($id);
         return response()->json(['edit'=> $user]);
     }
 
+    /**
+     * @param mixed $id
+     * @return string|null
+     */
     public function update($id): ?string
     {
         try{
@@ -190,6 +210,10 @@ class UsersController implements IResourceController
         }
     }
 
+    /**
+     * @param mixed $id
+     * @return string|null
+     */
     public function destroy($id): ?string
     {
         return response()->json([

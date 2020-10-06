@@ -33,7 +33,9 @@ class DefaultController
         $user = input()->all();
         $token = $this->auth->authentication($user);
         if(isset($token)){
-            return $token;
+            return response()->json([
+                'Success' => $token
+            ]);
         }
         else {
             return response()->json([
@@ -65,6 +67,16 @@ class DefaultController
     public function notFound(): string
     {
         return $this->twig->render()->render('/error/404.html',[null]);
+    }
+
+    public function error(): string
+    {
+        return $this->twig->render()->render('/error/error.html',[null]);
+    }
+
+    public function authError(): string
+    {
+        return $this->twig->render()->render('/error/notLoggedIN.html',[null]);
     }
 
 }
