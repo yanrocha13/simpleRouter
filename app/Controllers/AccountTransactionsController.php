@@ -50,13 +50,11 @@ class AccountTransactionsController implements IResourceController
      */
     public function viewIndex()
     {
-        $userId = 5;
-        $accountTransactionList = $this->accountTransaction->listById($userId);
-
-//        $fulldata = array_merge($accountTransactionList);
+        $accountTransactionList = $this->accountTransaction->getListByIdDecrypted();
+        $fulldata = array_merge($accountTransactionList);
 
 
-        return $this->twig->render()->render('/transactions/Index.html',compact('accountTransactionList'));
+        return $this->twig->render()->render('/transactions/Index.html',$fulldata);
     }
 
     /**

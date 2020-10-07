@@ -15,7 +15,6 @@ class ApiVerification implements IMiddleware
     {
         // Do authentication
         try{
-            var_dump($request->getHeader('Authorization'));
             if(isset($_COOKIE['authentication'])){
                 $authCookie = $_COOKIE['authentication'];
                 $autentication = xorEncrypt($authCookie,'decrypt');

@@ -47,7 +47,8 @@ class AccountTransactionRepository implements AccountTransactionRepositoryInterf
      * @param $data
      * @return mixed
      */
-    public function whereFirst($parameter, $data){
+    public function whereFirst($parameter, $data)
+    {
         return $this->accountTransactions->where($parameter,$data)->first();
     }
 
@@ -55,14 +56,16 @@ class AccountTransactionRepository implements AccountTransactionRepositoryInterf
      * @param $user
      * @return mixed
      */
-    public function create($user){
+    public function create($user)
+    {
         return $this->accountTransactions->create($user);
     }
 
     /**
      * @return AccountTransactions[]|Collection
      */
-    public function list(){
+    public function list()
+    {
         return $this->accountTransactions->all();
     }
 
@@ -70,7 +73,8 @@ class AccountTransactionRepository implements AccountTransactionRepositoryInterf
      * @param $id
      * @return mixed
      */
-    public function find($id){
+    public function find($id)
+    {
         return $this->accountTransactions->find($id);
     }
 
@@ -79,7 +83,8 @@ class AccountTransactionRepository implements AccountTransactionRepositoryInterf
      * @param $update
      * @return mixed
      */
-    public function update($id, $update){
+    public function update($id, $update)
+    {
         return $this->accountTransactions->where('id',$id)->update($update);
     }
 
@@ -87,7 +92,8 @@ class AccountTransactionRepository implements AccountTransactionRepositoryInterf
      * @param $id
      * @return mixed
      */
-    public function remove($id){
+    public function remove($id)
+    {
         return $this->accountTransactions->find($id)->delete();
     }
 
@@ -95,7 +101,8 @@ class AccountTransactionRepository implements AccountTransactionRepositoryInterf
      * @param $request
      * @return array
      */
-    public function defineTransaction($request){
+    public function defineTransaction($request)
+    {
         $transaction = [];
         $user = getUser();
         $date = new DateTime();
@@ -132,7 +139,8 @@ class AccountTransactionRepository implements AccountTransactionRepositoryInterf
      * @param $transaction
      * @return false
      */
-    public function executeTransaction($transaction){
+    public function executeTransaction($transaction)
+    {
         $result = false;
         switch( xorEncrypt($transaction["transaction_type"], "decrypt")){
             case 1:
@@ -152,8 +160,31 @@ class AccountTransactionRepository implements AccountTransactionRepositoryInterf
     /**
      * @return AccountTransactions[]|Collection
      */
-    public function listById($id){
+    public function listById($id)
+    {
         $userAccount = $this->userAccountRepository->whereFirst('user_id',$id);
         return $this->accountTransactions->where('account_origin_id',$userAccount->id)->get();
+    }
+
+    /**
+     *
+     */
+    public function getListByIdDecrypted()
+    {
+        $user = getUser();
+
+        $transactionList = $this->accountTransactions->where('account_origin_id',$user->account->id)->get();
+        $decrypt = ['value',
+                    'transaction_type',
+                    'transaction_date'];
+        $transaction = [];
+        foreach($transactionList as $key => $transactionK){
+            $transactionListAux = ['account_origin_id' => $transactionK->account_origin_id,
+                                   'account_destination_id' => $transactionK->account_destination_id];
+            $transactionMerge = [$transactionK->id => array_merge($transactionListAux, helperDecryptArray($transactionK->getAttributes(), $decrypt)) ];
+            $transaction = array_merge($transaction , $transactionMerge);
+        }
+
+        return ['transaction' => $transaction];
     }
 }
