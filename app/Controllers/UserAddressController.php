@@ -5,8 +5,10 @@ namespace Demo\Controllers;
 
 use Demo\Models\Users;
 use Demo\Models\UserAddress;
+use Demo\Repository\Api\LoggerRepositoryInterface;
 use Demo\Repository\Api\UserAddressRepositoryInterface;
 use Demo\Repository\Api\UserRepositoryInterface;
+use Exception;
 use Pecee\Controllers\IResourceController;
 
 class UserAddressController implements IResourceController
@@ -20,15 +22,24 @@ class UserAddressController implements IResourceController
      * @var UserRepositoryInterface
      */
     private $userRepository;
+    /**
+     * @var LoggerRepositoryInterface
+     */
+    private $loggerRepository;
 
     /**
      * UserAddressController constructor.
      * @param UserAddressRepositoryInterface $userAddressRepository
+     * @param UserRepositoryInterface $userRepository
+     * @param LoggerRepositoryInterface $loggerRepository
      */
-    public function __construct(UserAddressRepositoryInterface $userAddressRepository, UserRepositoryInterface $userRepository)
+    public function __construct(UserAddressRepositoryInterface $userAddressRepository,
+                                UserRepositoryInterface $userRepository,
+                                LoggerRepositoryInterface $loggerRepository)
     {
         $this->userAddressRepository = $userAddressRepository;
         $this->userRepository = $userRepository;
+        $this->loggerRepository = $loggerRepository;
     }
 
     /**
@@ -80,19 +91,24 @@ class UserAddressController implements IResourceController
                     'reference' => xorEncrypt($request['reference']),
                     'observation' => xorEncrypt($request['observation'])];
                 $address = $this->userAddressRepository->create($create);
+
+                $message = "Created address[". $address->id ."] for user " .$user->id;
+                $this->loggerRepository->createModelLog("userAddress",$message,200);
                 return response()->json([
                     'Success' => "Address added to user " . $user->id
                 ]);
             }else {
+                $message = "An error occurred while saving address to user " . $user->id;
+                $this->loggerRepository->createModelLog("userAddress",$message,400);
                 return response()->json([
                     'Error' => "Ocorreu um error ao salvar os dados, confira os dados ou tente novamente mais tarde."
                 ]);
             }
 
-        }catch (ExceptionInterface $ex){
-            return response()->json([
-                'method' => $ex
-            ]);
+        }catch (Exception $ex){
+            $message = "An erro ocurred. More info =>" . $ex->getMessage();
+            $this->loggerRepository->createModelLog("userAddress",$message,400);
+            throwException($ex);
         }
     }
 
@@ -123,10 +139,14 @@ class UserAddressController implements IResourceController
                 'observation' => xorEncrypt($request['observation'])];
             $user = $this->userAddressRepository->update($id, $update);
 
+            $message = "Updated address[" . $user->id . "]";
+            $this->loggerRepository->createModelLog("accountTransaction",$message,200);
             return response()->json([
                 'update' => "Updated address " . $id
             ]);
-        } catch(\Exception $ex) {
+        } catch(Exception $ex) {
+            $message = "An error ocurred. More info =>" . $ex->getMessage();
+            $this->loggerRepository->createModelLog("accountTransaction",$message,400);
             throwException($ex);
         }
     }
@@ -142,7 +162,7 @@ class UserAddressController implements IResourceController
             return response()->json([
                 'destroy' => 'Address removed!'
             ]);
-        } catch(\Exception $ex) {
+        } catch(Exception $ex) {
             throwException($ex);
         }
     }

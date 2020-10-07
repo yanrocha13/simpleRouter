@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Demo\Controllers;
 
+use Demo\Repository\Api\LoggerRepositoryInterface;
 use Demo\Repository\Api\UserAccountRepositoryInterface;
 use Demo\Repository\Api\UserRepositoryInterface;
 use Pecee\Controllers\IResourceController;
@@ -18,16 +19,24 @@ class UserAccountController implements IResourceController
      * @var UserAccountRepositoryInterface
      */
     private $userAccountRepository;
+    /**
+     * @var LoggerRepositoryInterface
+     */
+    private $loggerRepository;
 
     /**
      * UserAccountController constructor.
      * @param UserRepositoryInterface $usersRepository
      * @param UserAccountRepositoryInterface $userAccountRepository
+     * @param LoggerRepositoryInterface $loggerRepository
      */
-    public function __construct(UserRepositoryInterface $usersRepository, UserAccountRepositoryInterface $userAccountRepository)
+    public function __construct(UserRepositoryInterface $usersRepository,
+                                UserAccountRepositoryInterface $userAccountRepository,
+                                LoggerRepositoryInterface $loggerRepository)
     {
         $this->usersRepository = $usersRepository;
         $this->userAccountRepository = $userAccountRepository;
+        $this->loggerRepository = $loggerRepository;
     }
 
     /**

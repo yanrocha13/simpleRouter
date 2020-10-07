@@ -5,6 +5,8 @@ namespace Demo\Controllers;
 
 use Demo\Models\Renderer;
 use Demo\Repository\Api\AccountTransactionRepositoryInterface;
+use Demo\Repository\Api\LoggerRepositoryInterface;
+use Exception;
 use Pecee\Controllers\IResourceController;
 
 class AccountTransactionsController implements IResourceController
@@ -18,17 +20,24 @@ class AccountTransactionsController implements IResourceController
      * @var Renderer
      */
     private $twig;
+    /**
+     * @var LoggerRepositoryInterface
+     */
+    private $loggerRepository;
 
     /**
      * AccountTransacationsController constructor.
      * @param AccountTransactionRepositoryInterface $accountTransaction
      * @param Renderer $twig
+     * @param LoggerRepositoryInterface $loggerRepository
      */
     public function __construct(AccountTransactionRepositoryInterface $accountTransaction,
-                                Renderer $twig)
+                                Renderer $twig,
+                                LoggerRepositoryInterface $loggerRepository)
     {
         $this->accountTransaction = $accountTransaction;
         $this->twig = $twig;
+        $this->loggerRepository = $loggerRepository;
     }
 
     /**
@@ -53,7 +62,7 @@ class AccountTransactionsController implements IResourceController
         $accountTransactionList = $this->accountTransaction->getListByIdDecrypted();
         $fulldata = array_merge($accountTransactionList);
 
-
+        $this->loggerRepository->createViewLog("AccountTransactions",getUser()->id . 'accessed his transactios page' ,200);
         return $this->twig->render()->render('/transactions/Index.html',$fulldata);
     }
 
@@ -85,17 +94,26 @@ class AccountTransactionsController implements IResourceController
      */
     public function store(): ?string
     {
-        $request = input()->all();
+        try {
+            $request = input()->all();
 
-        $newTransaction = $this->accountTransaction->defineTransaction($request);
-        $executeTransaction = $this->accountTransaction->executeTransaction($newTransaction);
-        if($executeTransaction){
-            $saveTransaction = $this->accountTransaction->create($newTransaction);
+            $newTransaction = $this->accountTransaction->defineTransaction($request);
+            $executeTransaction = $this->accountTransaction->executeTransaction($newTransaction);
+            if($executeTransaction){
+                $saveTransaction = $this->accountTransaction->create($newTransaction);
+            }
+
+            $message = "Created transaction of type " . $saveTransaction->transaction_type . " from account " . $saveTransaction->account_origin_id . " to " . $saveTransaction->account_destination_id;
+            $this->loggerRepository->createModelLog("accountTransaction",$message,200);
+            return response()->json([
+                'store' => $executeTransaction
+            ]);
+        }catch(Exception $ex)
+        {
+            $message = "Some erro ocurred. More info => " . $ex->getMessage();
+            $this->loggerRepository->createModelLog("accountTransactions",$message,400);
+            throwException($ex);
         }
-
-        return response()->json([
-            'store' => $executeTransaction
-        ]);
     }
 
     /**
