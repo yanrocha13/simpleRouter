@@ -44,7 +44,7 @@ Router::group(['namespace' => '\Demo\Controllers', 'exceptionHandler' => \Demo\H
         Router::post('/user/create', 'UsersController@store');
         Router::post('/auth', 'DefaultController@authentication');
 
-		Router::group(['prefix' => '/v1','exceptionHandler' => \Core\Handlers\CustomExceptionHandler::class , 'middleware' => \Demo\Middlewares\ApiVerification::class], function(){
+		Router::group(['prefix' => '/v1','exceptionHandler' => \Demo\Handlers\CustomExceptionHandler::class , 'middleware' => \Demo\Middlewares\ApiVerification::class], function(){
 		    /** USER */
             Router::get('/user/', 'UsersController@index');
             Router::get('/user/{id}', 'UsersController@show');

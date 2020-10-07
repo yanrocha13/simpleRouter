@@ -6,7 +6,6 @@ namespace Demo\Controllers;
 use Demo\Models\Renderer;
 use Demo\Repository\Api\AccountTransactionRepositoryInterface;
 use Demo\Repository\Api\LoggerRepositoryInterface;
-use Exception;
 use Pecee\Controllers\IResourceController;
 
 class AccountTransactionsController implements IResourceController
@@ -108,11 +107,13 @@ class AccountTransactionsController implements IResourceController
             return response()->json([
                 'store' => $executeTransaction
             ]);
-        }catch(Exception $ex)
+        }catch(\Exception $ex)
         {
             $message = "Some erro ocurred. More info => " . $ex->getMessage();
             $this->loggerRepository->createModelLog("accountTransactions",$message,400);
-            throwException($ex);
+            return response()->json([
+                'store' => $ex
+            ]);
         }
     }
 

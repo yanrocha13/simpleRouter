@@ -1,1 +1,7 @@
 [2020-10-07T03:52:10.201638+00:00] /view/show/user.INFO: User with ID = 5 access user auth page [] []
+[2020-10-07T04:24:12.442348+00:00] /view/show/user.INFO: User with ID = 5 access user auth page [] []
+[2020-10-07T04:24:13.754883+00:00] /view/show/user.INFO: User with ID = 5 access user auth page [] []
+[2020-10-07T04:30:53.293911+00:00] /view/show/user.INFO: User with ID = 5 access user auth page [] []
+[2020-10-07T04:42:53.363947+00:00] /view/show/user.INFO: User with ID = 5 access user auth page [] []
+[2020-10-07T04:45:11.363520+00:00] AccountTransactions.INFO: 5accessed his transactios page [] []
+[2020-10-07T04:45:20.438338+00:00] /view/show/user.INFO: User with ID = 5 access user auth page [] []
