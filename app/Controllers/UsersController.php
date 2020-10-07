@@ -4,10 +4,12 @@ declare(strict_types=1);
 namespace Demo\Controllers;
 
 use Demo\Models\Renderer;
+use Demo\Repository\Api\LoggerRepositoryInterface;
 use Demo\Repository\Api\UserAccountRepositoryInterface;
 use Demo\Repository\Api\UserAddressRepositoryInterface;
 use Demo\Repository\Api\UserPhoneRepositoryInterface;
 use Demo\Repository\Api\UserRepositoryInterface;
+use Exception;
 use Pecee\Controllers\IResourceController;
 use Symfony\Component\Translation\Exception\ExceptionInterface;
 
@@ -37,6 +39,10 @@ class UsersController implements IResourceController
      * @var Renderer
      */
     private $twig;
+    /**
+     * @var LoggerRepositoryInterface
+     */
+    private $loggerRepository;
 
     /**
      * UsersController constructor.
@@ -45,18 +51,21 @@ class UsersController implements IResourceController
      * @param UserPhoneRepositoryInterface $userPhoneRepository
      * @param UserAddressRepositoryInterface $userAddressRepository
      * @param Renderer $twig
+     * @param LoggerRepositoryInterface $loggerRepository
      */
     public function __construct(UserRepositoryInterface $usersRepository,
                                 UserAccountRepositoryInterface $userAccountRepository,
                                 UserPhoneRepositoryInterface $userPhoneRepository,
                                 UserAddressRepositoryInterface $userAddressRepository,
-                                Renderer $twig)
+                                Renderer $twig,
+                                LoggerRepositoryInterface $loggerRepository)
     {
         $this->usersRepository = $usersRepository;
         $this->userAccountRepository = $userAccountRepository;
         $this->userPhoneRepository = $userPhoneRepository;
         $this->userAddressRepository = $userAddressRepository;
         $this->twig = $twig;
+        $this->loggerRepository = $loggerRepository;
     }
 
     /**
@@ -94,6 +103,7 @@ class UsersController implements IResourceController
 
         $fulldata = array_merge($user, $phone, $address, $account);
 
+        $this->loggerRepository->createViewLog("/view/show/user","User with ID = " . $authUser->id . " access user auth page",200);
         return $this->twig->render()->render('/Users/Index.html',$fulldata);
     }
 
@@ -115,6 +125,7 @@ class UsersController implements IResourceController
      */
     public function renderCreate()
     {
+        $this->loggerRepository->createViewLog("/view/create/user","User create page was accessed",200);
         return $this->twig->render()->render('/Users/Create.html',[null]);
     }
 
@@ -162,15 +173,17 @@ class UsersController implements IResourceController
 
             $account = $this->userAccountRepository->create($newAccount);
 
+            $message = "Created user " . $user->id . ". With account number: " . xorEncrypt($account->account_number,'decrypt');
+            $this->loggerRepository->createModelLog("user",$message,200);
             return response()->json([
-                'create' => "Created user " . $user->id . ". With account number: " . xorEncrypt($account->account_number,'decrypt')
+                'create' => $message
             ]);
 
-        }catch (ExceptionInterface $ex){
+        }catch (Exception $ex){
 
-            return response()->json([
-                'method' => $ex
-            ]);
+            $message = "Some error occured. More info in => " . $ex->getMessage();
+            $this->loggerRepository->createModelLog("user",$message,400);
+            throwException($ex);
 
         }
     }
@@ -201,11 +214,15 @@ class UsersController implements IResourceController
                 "birth_date"=> xorEncrypt($request['birth_date'])];
             $user = $this->usersRepository->update($id, $update);
 
+            $message = "Updated user " . $id;
+            $this->loggerRepository->createModelLog("user",$message,200);
             return response()->json([
                 'edit' => "Updated user " . $id
             ]);
 
-        }catch(\Exception $ex){
+        }catch(Exception $ex){
+            $message = "Some error occured. More info in => " . $ex->getMessage();
+            $this->loggerRepository->createModelLog("user",$message,400);
             throwException($ex);
         }
     }
