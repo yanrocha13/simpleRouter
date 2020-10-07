@@ -74,7 +74,8 @@ class UserAccountRepository implements UserAccountRepositoryInterface
      * @param $transaction
      * @return bool
      */
-    public function deposit($transaction){
+    public function deposit($transaction): bool
+    {
         try{
             $user = getUser();
             $userAccount = $this->whereFirst('user_id',$user->id);
@@ -100,7 +101,8 @@ class UserAccountRepository implements UserAccountRepositoryInterface
      * @param $transaction
      * @return bool
      */
-    public function transfer($transaction){
+    public function transfer($transaction): bool
+    {
         try{
             $user = getUser();
             $originAccount = $this->whereFirst('user_id',$user->id);
@@ -135,7 +137,8 @@ class UserAccountRepository implements UserAccountRepositoryInterface
      * @param $transaction
      * @return bool
      */
-    public function withdraw($transaction){
+    public function withdraw($transaction): bool
+    {
         try{
             $user = getUser();
             $userAccount = $this->whereFirst('user_id',$user->id);

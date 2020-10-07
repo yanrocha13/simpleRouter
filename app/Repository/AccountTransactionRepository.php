@@ -101,11 +101,13 @@ class AccountTransactionRepository implements AccountTransactionRepositoryInterf
      * @param $request
      * @return array
      */
-    public function defineTransaction($request)
+    public function defineTransaction($request): ?array
     {
         $transaction = [];
         $user = getUser();
-        $date = new DateTime();
+
+        date_default_timezone_set("America/Sao_Paulo");
+        $date = date("d/m/Y H:i:s");
 
         switch ($request["type"]){
             case 1:
@@ -113,7 +115,7 @@ class AccountTransactionRepository implements AccountTransactionRepositoryInterf
                     'account_destination_id' => $user->account->id,
                     'value' => xorEncrypt($request["value"]),
                     'transaction_type' => xorEncrypt('1'),
-                    'transaction_date' => xorEncrypt($date->date)];
+                    'transaction_date' => xorEncrypt($date)];
                 break;
             case 2:
                 $destination_account = $this->userAccountRepository->whereFirst('account_number',xorEncrypt($request['destination_account']));
@@ -121,14 +123,14 @@ class AccountTransactionRepository implements AccountTransactionRepositoryInterf
                     'account_destination_id' => $destination_account->id,
                     'value' => xorEncrypt($request["value"]),
                     'transaction_type' => xorEncrypt('2'),
-                    'transaction_date' => xorEncrypt($date->date)];
+                    'transaction_date' => xorEncrypt($date)];
                 break;
             case 3:
                 $transaction = ['account_origin_id' => $user->account->id,
                     'account_destination_id' => $user->account->id,
                     'value' => xorEncrypt($request["value"]),
                     'transaction_type' => xorEncrypt('3'),
-                    'transaction_date' => xorEncrypt($date->date)];
+                    'transaction_date' => xorEncrypt($date)];
                 break;
         }
 

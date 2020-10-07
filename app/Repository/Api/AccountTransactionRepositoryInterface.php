@@ -17,7 +17,7 @@ interface AccountTransactionRepositoryInterface
 
     public function remove($id);
 
-    public function defineTransaction($request);
+    public function defineTransaction($request): ?array;
 
     public function executeTransaction($transaction);
 
