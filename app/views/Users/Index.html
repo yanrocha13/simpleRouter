@@ -60,7 +60,6 @@
 
 <script>
     $(document).ready(function(){
-        console.log(document.cookie);
         var authCookie = document.cookie.replace('authentication=','').split(';')
 
         $.ajax({
@@ -68,7 +67,6 @@
             url: '/api/v1/user/{{id}}',
             headers: {"Authorization": "Basic " + authCookie} ,
             success: function(a){
-                    console.log(a)
                 if(a.user){
                     $('.userAccountNumber').html(a.account.account_number)
                     $('.userFunds').html(a.account.funds)
@@ -100,8 +98,6 @@
                         $("#userPhone").append(userPhone)
                     }
 
-                    console.log(a.addres.address)
-
                 }else{
                     $('body').html(a)
                 }
@@ -110,9 +106,6 @@
                 alert('Ocorreu um erro durante o envio do formulario, aguarde um estante atualize a pagina!')
             }
         });
-
-
-        console.log(authCookie[0]);
     })
 </script>
 

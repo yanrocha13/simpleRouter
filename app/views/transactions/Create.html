@@ -161,8 +161,6 @@
                 'value': transaction_value,
                 'destination_account': transaction_destination},
             success: function(a,b){
-                console.log(a)
-                console.log(b)
                 if(a.error){
                     alert(a.error)
                 }else if(a.store){

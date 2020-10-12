@@ -58,11 +58,10 @@ class AccountTransactionsController implements IResourceController
      */
     public function viewIndex()
     {
-        $accountTransactionList = $this->accountTransaction->getListByIdDecrypted();
-        $fulldata = array_merge($accountTransactionList);
+        $user = getUser();
 
         $this->loggerRepository->createViewLog("AccountTransactions",getUser()->id . 'accessed his transactios page' ,200);
-        return $this->twig->render()->render('/transactions/Index.html',$fulldata);
+        return $this->twig->render()->render('/transactions/Index.html',["id" => $user->id]);
     }
 
     /**
@@ -71,9 +70,10 @@ class AccountTransactionsController implements IResourceController
      */
     public function show($id): ?string
     {
-        $accountTransaction = $this->accountTransaction->find($id);
+        $accountTransactionList = $this->accountTransaction->getListByUserIdDecrypted();
+
         return response()->json([
-            'show' => $accountTransaction
+            'List' => $accountTransactionList
         ]);
     }
 

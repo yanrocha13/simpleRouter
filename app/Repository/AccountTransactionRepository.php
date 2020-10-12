@@ -171,7 +171,7 @@ class AccountTransactionRepository implements AccountTransactionRepositoryInterf
     /**
      *
      */
-    public function getListByIdDecrypted()
+    public function getListByUserIdDecrypted()
     {
         $user = getUser();
 

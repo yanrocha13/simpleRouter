@@ -1,6 +1,10 @@
 {% extends "/template/template.html" %}
 {% block content %}
 <div>
+    <div class="d-flex justify-content-center">
+        <a type="button" href="/view/create/transaction" class="btn btn-lg w-25 btn-success m-2">Nova Transação</a>
+        <a type="button" href="/view/show/user" class="btn btn-lg w-25 btn-primary m-2">Meu Usuário</a>
+    </div>
     <table class="table table-striped table-dark text-center" style="border-radius: 10px;">
         <thead>
         <tr>
@@ -12,8 +16,8 @@
             <th scope="col" style="border-top: none">Data</th>
         </tr>
         </thead>
-        <tbody>
-    {% for transaction in transaction %}
+        <tbody id="transactionTableBody">
+<!--    {% for transaction in transaction %}
         <tr>
             <th scope="row">{{transaction['id']}}</th>
             <td>{{transaction['account_origin_id']}}</td>
@@ -29,8 +33,54 @@
             </td>
             <td>{{transaction['transaction_date']}}</td>
         </tr>
-    {%endfor%}
+    {%endfor%}-->
         </tbody>
     </table>
 </div>
+{% endblock %}
+
+{% block script %}
+
+<script>
+    $(document).ready(function(){
+        var authCookie = document.cookie.replace('authentication=','').split(';')
+
+        $.ajax({
+            type: "GET",
+            url: '/api/v1/transaction/{{id}}',
+            headers: {"Authorization": "Basic " + authCookie} ,
+            success: function(a){
+                if(a.List){
+
+                    //TRANSACTION LIST
+                    let transactionAmount = a.List.transaction.length
+                    $('#transactionTableBody').html("")
+                    let transactionTableBody = "";
+                    for(x = 0; x < transactionAmount; x++){
+                        transactionTableBody = "        <tr>" +
+                            "            <th scope='row'>"+ a.List.transaction[x].id +"</th>" +
+                            "            <td>"+ a.List.transaction[x].account_origin_id +"</td>" +
+                            "            <td>"+ a.List.transaction[x].account_destination_id +"</td>" +
+                            "            <td>"+ a.List.transaction[x].value +"</td>"
+                        if(a.List.transaction[x].transaction_type == 1){
+                            transactionTableBody += "<td><span>Depósito</span></td>"
+                        }else if(a.List.transaction[x].transaction_type == 2){
+                            transactionTableBody += "<td><span>Transferência</span></td>"
+                        }else if(a.List.transaction[x].transaction_type == 3){
+                            transactionTableBody += "<td><span>Saque</span></td>"
+                        }
+                        transactionTableBody += "<td><span>"+ a.List.transaction[x].transaction_date +"</span></td>"
+                        $("#transactionTableBody").append(transactionTableBody)
+                    }
+                }else{
+                    $('body').html(a)
+                }
+            },
+            error: function (){
+                alert('Ocorreu um erro durante o envio do formulario, aguarde um estante atualize a pagina!')
+            }
+        });
+    })
+</script>
+
 {% endblock %}

@@ -23,6 +23,6 @@ interface AccountTransactionRepositoryInterface
 
     public function listById($userId);
 
-    public function getListByIdDecrypted();
+    public function getListByUserIdDecrypted();
 
 }

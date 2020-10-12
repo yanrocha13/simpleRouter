@@ -112,7 +112,7 @@ class UsersController implements IResourceController
         $fulldata = array_merge($user, $phone, $address, $account);
 
         $this->loggerRepository->createViewLog("/view/show/user","User with ID = " . $authUser->id . " access user auth page",200);
-        return $this->twig->render()->render('/Users/Index.html',["id" => $authUser->id]);
+        return $this->twig->render()->render('/Users/Index.html',["id" =>  $authUser->id]);
     }
 
     /**
