@@ -52,7 +52,6 @@ class AuthRepository implements AuthInterface
 
             if(isset($users) && $users->password == xorEncrypt($user['password'])){
                 $token = $this->makeToken($users);
-                setcookie("UE",$users->email, time()+3600);
                 setcookie("authentication", $token, time()+3600);
                 return $token;
             }

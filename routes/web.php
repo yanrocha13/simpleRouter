@@ -18,6 +18,7 @@ Router::enableDependencyInjection($container);
 Router::csrfVerifier(new \Demo\Middlewares\CsrfVerifier());
 
 Router::group(['namespace' => '\Demo\Controllers', 'exceptionHandler' => \Demo\Handlers\CustomExceptionHandler::class], function () {
+    // VIEWS
     Router::group(['prefix' => '/view'], function () {
         Router::get('/auth', 'DefaultController@auth');
         Router::group(['prefix' => '/show', 'middleware' => \Demo\Middlewares\ApiVerification::class], function () {
@@ -78,6 +79,7 @@ Router::group(['namespace' => '\Demo\Controllers', 'exceptionHandler' => \Demo\H
 	});
 });
 
+/** ERRORS */
 Router::group(['namespace' => '\Demo\Controllers', 'prefix' => '/error','exceptionHandler' => \Demo\Handlers\CustomExceptionHandler::class], function () {
 
     Router::get('/not-found', 'DefaultController@notFound');

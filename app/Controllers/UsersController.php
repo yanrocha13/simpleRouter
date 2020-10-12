@@ -83,8 +83,16 @@ class UsersController implements IResourceController
      */
     public function show($id): ?string
     {
-        $user = $this->usersRepository->find($id);
-        return response()->json(['show' => $user]);
+        $authUser = getUser();
+        $user = $this->usersRepository->getFirstUserDecrypted('id',$authUser->id);
+        $phone = $this->userPhoneRepository->getPhoneListDecrypted('user_id',$authUser->id);
+        $address = $this->userAddressRepository->getAddressListDecrypted('user_id',$authUser->id);
+        $account = $this->userAccountRepository->getUserAccountDecrypted('user_id',$authUser->id);
+
+        return response()->json(['user' => $user,
+                                 'phone' => $phone,
+                                 'addres' => $address,
+                                 'account' => $account]);
     }
 
     /**
@@ -104,7 +112,7 @@ class UsersController implements IResourceController
         $fulldata = array_merge($user, $phone, $address, $account);
 
         $this->loggerRepository->createViewLog("/view/show/user","User with ID = " . $authUser->id . " access user auth page",200);
-        return $this->twig->render()->render('/Users/Index.html',$fulldata);
+        return $this->twig->render()->render('/Users/Index.html',["id" => $authUser->id]);
     }
 
     /**
