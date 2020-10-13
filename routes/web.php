@@ -3,6 +3,11 @@
  * This file contains all the routes for the project
  */
 
+use Demo\Handlers\CustomExceptionHandler;
+use Demo\Middlewares\ApiVerification;
+use Demo\Middlewares\CsrfVerifier;
+use Demo\Middlewares\LoggerData;
+use Demo\Middlewares\LoggerView;
 use Demo\Router;
 use Pecee\Http\Request;
 use Pecee\SimpleRouter\Exceptions\NotFoundHttpException;
@@ -15,13 +20,13 @@ $container = (new \DI\ContainerBuilder())
 
 Router::enableDependencyInjection($container);
 
-Router::csrfVerifier(new \Demo\Middlewares\CsrfVerifier());
+Router::csrfVerifier(new CsrfVerifier());
 
-Router::group(['namespace' => '\Demo\Controllers', 'exceptionHandler' => \Demo\Handlers\CustomExceptionHandler::class], function () {
+Router::group(['namespace' => '\Demo\Controllers', 'exceptionHandler' => CustomExceptionHandler::class], function () {
     // VIEWS
-    Router::group(['prefix' => '/view'], function () {
+    Router::group(['prefix' => '/view', 'middleware' => LoggerView::class], function () {
         Router::get('/auth', 'DefaultController@auth');
-        Router::group(['prefix' => '/show', 'middleware' => \Demo\Middlewares\ApiVerification::class], function () {
+        Router::group(['prefix' => '/show', 'middleware' => ApiVerification::class], function () {
             Router::get('/transaction', 'AccountTransactionsController@viewIndex');
             Router::get('/user', 'UsersController@renderShow');
             Router::get('/user_account', 'DefaultController@home');
@@ -38,14 +43,14 @@ Router::group(['namespace' => '\Demo\Controllers', 'exceptionHandler' => \Demo\H
         });
     });
     // API
-	Router::group(['prefix' => '/api'], function () {
+	Router::group(['prefix' => '/api', 'middleware' => LoggerData::class], function () {
         Router::get('/', 'DefaultController@home')->setName('home');
 		Router::resource('/demo', 'ApiController');
         Router::get('/user/create', 'UsersController@create');
         Router::post('/user/create', 'UsersController@store');
         Router::post('/auth', 'DefaultController@authentication');
 
-		Router::group(['prefix' => '/v1','exceptionHandler' => \Demo\Handlers\CustomExceptionHandler::class , 'middleware' => \Demo\Middlewares\ApiVerification::class], function(){
+		Router::group(['prefix' => '/v1','exceptionHandler' => CustomExceptionHandler::class , 'middleware' => ApiVerification::class], function(){
 		    /** USER */
             Router::get('/user/', 'UsersController@index');
             Router::get('/user/{id}', 'UsersController@show');
@@ -80,7 +85,7 @@ Router::group(['namespace' => '\Demo\Controllers', 'exceptionHandler' => \Demo\H
 });
 
 /** ERRORS */
-Router::group(['namespace' => '\Demo\Controllers', 'prefix' => '/error','exceptionHandler' => \Demo\Handlers\CustomExceptionHandler::class], function () {
+Router::group(['namespace' => '\Demo\Controllers', 'prefix' => '/error','exceptionHandler' => CustomExceptionHandler::class], function () {
 
     Router::get('/not-found', 'DefaultController@notFound');
     Router::get('/', 'DefaultController@error');

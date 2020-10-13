@@ -60,7 +60,6 @@ class AccountTransactionsController implements IResourceController
     {
         $user = getUser();
 
-        $this->loggerRepository->createViewLog("AccountTransactions",getUser()->id . 'accessed his transactios page' ,200);
         return $this->twig->render()->render('/transactions/Index.html',["id" => $user->id]);
     }
 

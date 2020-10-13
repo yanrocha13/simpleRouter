@@ -28,7 +28,7 @@ class LoggerRepository implements LoggerRepositoryInterface
      * @param int $level
      * @param array|null $context
      */
-    public function createViewLog(string $view, string $message, int $level, ?array $context = null): void
+    public function createViewLog(string $view, string $message, int $level, ?array $context = []): void
     {
         $log = new Logger($view);
         $log->pushHandler(new StreamHandler(__DIR__ . '/../../etc/Log/view.log', $level));
@@ -41,33 +41,33 @@ class LoggerRepository implements LoggerRepositoryInterface
      * @param string|null $message
      * @param array|null $context
      */
-    private function logMessageAndContext(int $level, Logger $log, ?string $message = null , ?array $context = null)
+    private function logMessageAndContext(int $level, Logger $log, ?string $message = null , ?array $context = [])
     {
         switch($level)
         {
             case 100:
-                $log->debug($message);
+                $log->debug($message, $context);
                 break;
             case 200:
-                $log->info($message);
+                $log->info($message, $context);
                 break;
             case 250:
-                $log->notice($message);
+                $log->notice($message, $context);
                 break;
             case 300:
-                $log->warning($message);
+                $log->warning($message, $context);
                 break;
             case 400:
-                $log->error($message);
+                $log->error($message, $context);
                 break;
             case 500:
-                $log->critical($message);
+                $log->critical($message, $context);
                 break;
             case 550:
-                $log->alert($message);
+                $log->alert($message, $context);
                 break;
             case 600:
-                $log->emergency($message);
+                $log->emergency($message, $context);
                 break;
         }
     }
