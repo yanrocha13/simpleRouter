@@ -180,7 +180,7 @@ class UsersController implements IResourceController
             $account = $this->userAccountRepository->create($newAccount);
 
             $message = "Created user " . $user->id . ". With account number: " . xorEncrypt($account->account_number,'decrypt');
-            $this->loggerRepository->createModelLog("user",$message,200);
+            $this->loggerRepository->createModelLog("user",$message,200, $request);
             return response()->json([
                 'create' => $message
             ]);
@@ -221,7 +221,7 @@ class UsersController implements IResourceController
             $user = $this->usersRepository->update($id, $update);
 
             $message = "Updated user " . $id;
-            $this->loggerRepository->createModelLog("user",$message,200);
+            $this->loggerRepository->createModelLog("user",$message,200, $request);
             return response()->json([
                 'edit' => "Updated user " . $id
             ]);

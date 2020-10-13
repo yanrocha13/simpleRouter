@@ -93,13 +93,13 @@ class UserAddressController implements IResourceController
                 $address = $this->userAddressRepository->create($create);
 
                 $message = "Created address[". $address->id ."] for user " .$user->id;
-                $this->loggerRepository->createModelLog("userAddress",$message,200);
+                $this->loggerRepository->createModelLog("userAddress",$message,200, $request);
                 return response()->json([
                     'Success' => "Address added to user " . $user->id
                 ]);
             }else {
                 $message = "An error occurred while saving address to user " . $user->id;
-                $this->loggerRepository->createModelLog("userAddress",$message,400);
+                $this->loggerRepository->createModelLog("userAddress",$message,400, $request);
                 return response()->json([
                     'Error' => "Ocorreu um error ao salvar os dados, confira os dados ou tente novamente mais tarde."
                 ]);
@@ -140,7 +140,7 @@ class UserAddressController implements IResourceController
             $user = $this->userAddressRepository->update($id, $update);
 
             $message = "Updated address[" . $user->id . "]";
-            $this->loggerRepository->createModelLog("accountTransaction",$message,200);
+            $this->loggerRepository->createModelLog("accountTransaction",$message,200, $request);
             return response()->json([
                 'update' => "Updated address " . $id
             ]);

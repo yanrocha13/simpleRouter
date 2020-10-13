@@ -102,7 +102,7 @@ class AccountTransactionsController implements IResourceController
             }
 
             $message = "Created transaction of type " . $saveTransaction->transaction_type . " from account " . $saveTransaction->account_origin_id . " to " . $saveTransaction->account_destination_id;
-            $this->loggerRepository->createModelLog("accountTransaction",$message,200);
+            $this->loggerRepository->createModelLog("accountTransaction",$message,200, $request);
             return response()->json([
                 'store' => $executeTransaction
             ]);
