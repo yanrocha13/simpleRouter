@@ -182,14 +182,16 @@ class UsersController implements IResourceController
             $message = "Created user " . $user->id . ". With account number: " . xorEncrypt($account->account_number,'decrypt');
             $this->loggerRepository->createModelLog("user",$message,200, $request);
             return response()->json([
-                'create' => $message
+                'Success' => $message
             ]);
 
         }catch (Exception $ex){
 
             $message = "Some error occured. More info in => " . $ex->getMessage();
             $this->loggerRepository->createModelLog("user",$message,400);
-            throwException($ex);
+            return response()->json([
+                'Error' => $message
+            ]);
 
         }
     }
