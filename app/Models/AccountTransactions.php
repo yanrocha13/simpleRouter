@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Demo\Models;
 use DateTime;
 use \Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class AccountTransactions extends Model
@@ -16,18 +17,18 @@ class AccountTransactions extends Model
         'transaction_date'];
 
     /**
-     * @return HasMany
+     * @return BelongsTo
      */
     public function destinationAccount()
     {
-        return $this->hasMany(UserAccount::class,'account_destination_id','id');
+        return $this->belongsTo(UserAccount::class,'account_destination_id','id');
     }
 
     /**
-     * @return HasMany
+     * @return BelongsTo
      */
     public function originAccount()
     {
-        return $this->hasMany(UserAccount::class,'account_destination_id','id');
+        return $this->belongsTo(UserAccount::class,'account_origin_id','id');
     }
 }

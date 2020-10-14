@@ -175,14 +175,15 @@ class AccountTransactionRepository implements AccountTransactionRepositoryInterf
     {
         $user = getUser();
 
-        $transactionList = $this->accountTransactions->where('account_origin_id',$user->account->id)->get();
+        $transactionList = $this->accountTransactions->where('account_origin_id',$user->account->id)->orWhere('account_destination_id',$user->account->id)->get();
+        $transactionList->load('destinationAccount','originAccount');
         $decrypt = ['value',
                     'transaction_type',
                     'transaction_date'];
         $transaction = [];
         foreach($transactionList as $key => $transactionK){
-            $transactionListAux = ['account_origin_id' => $transactionK->account_origin_id,
-                                   'account_destination_id' => $transactionK->account_destination_id];
+            $transactionListAux = ['account_origin_id' => xorEncrypt($transactionK->originAccount->account_number, 'decrypt'),
+                                   'account_destination_id' => xorEncrypt($transactionK->destinationAccount->account_number,'decrypt')];
             $transactionMerge = [$transactionK->id => array_merge($transactionListAux, helperDecryptArray($transactionK->getAttributes(), $decrypt)) ];
             $transaction = array_merge($transaction , $transactionMerge);
         }

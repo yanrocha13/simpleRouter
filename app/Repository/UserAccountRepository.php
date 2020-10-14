@@ -167,7 +167,7 @@ class UserAccountRepository implements UserAccountRepositoryInterface
      */
     public function getUserAccountDecrypted($parameter, $data)
     {
-        $userAccount = $this->whereFirst('user_id',5);
+        $userAccount = $this->whereFirst('user_id',getUser()->id);
 
         $decrypt = ['account_number',
             'funds'];

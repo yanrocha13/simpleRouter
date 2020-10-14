@@ -52,7 +52,12 @@ class AuthRepository implements AuthInterface
 
             if(isset($users) && $users->password == xorEncrypt($user['password'])){
                 $token = $this->makeToken($users);
-                setcookie("authentication", $token, time()+3600);
+                if (isset($_COOKIE['authentication'])) {
+                    unset($_COOKIE['authentication']);
+                    setcookie("authentication", $token, time()+3600);
+                }else {
+                    setcookie("authentication", $token, time()+3600);
+                }
                 return $token;
             }
             else{

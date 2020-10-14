@@ -115,7 +115,7 @@ class UsersRepository implements UserRepositoryInterface
      * @return array
      */
     public function getFirstUserDecrypted($parameter, $data){
-        $user = $this->whereFirst('id',5);
+        $user = getUser();
 
         $decrypt = ['email',
             'name',
