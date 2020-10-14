@@ -26,6 +26,7 @@ Router::group(['namespace' => '\Demo\Controllers', 'exceptionHandler' => CustomE
     // VIEWS
 
     Router::get('/view/auth', 'DefaultController@auth');
+    Router::get('/view/create/user', 'UsersController@renderCreate');
     Router::group(['prefix' => '/view', 'middleware' => LoggerView::class], function () {
         Router::group(['prefix' => '/show', 'middleware' => ApiVerification::class], function () {
             Router::get('/transaction', 'AccountTransactionsController@viewIndex');
@@ -33,7 +34,6 @@ Router::group(['namespace' => '\Demo\Controllers', 'exceptionHandler' => CustomE
             Router::get('/user_account', 'DefaultController@home');
         });
         Router::group(['prefix' => '/create'], function () {
-            Router::get('/user', 'UsersController@renderCreate');
             Router::get('/transaction', 'AccountTransactionsController@create');
         });
         Router::group(['prefix' => '/edit'], function () {
@@ -46,11 +46,11 @@ Router::group(['namespace' => '\Demo\Controllers', 'exceptionHandler' => CustomE
     // API
 
     Router::post('/api/auth', 'DefaultController@authentication');
+    Router::post('/api/user/create', 'UsersController@store');
 	Router::group(['prefix' => '/api', 'middleware' => LoggerData::class], function () {
         Router::get('/', 'DefaultController@home')->setName('home');
 		Router::resource('/demo', 'ApiController');
         Router::get('/user/create', 'UsersController@create');
-        Router::post('/user/create', 'UsersController@store');
 
 		Router::group(['prefix' => '/v1','exceptionHandler' => CustomExceptionHandler::class , 'middleware' => ApiVerification::class], function(){
 		    /** USER */

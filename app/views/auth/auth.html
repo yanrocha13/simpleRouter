@@ -59,6 +59,7 @@
     <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
     <br>
     <button id="loginSubmit" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    <span>Not a user? <button type="button" id="creatAccount" class="btn btn-link px-0" >Register now!</button></span>
     <p class="mt-5 mb-3 text-muted">© 2017-2019</p>
 </div>
 
@@ -75,7 +76,7 @@
             url: '/api/auth',
             data: {'email': email,
                    'password': password},
-            success: function(a,b,c){
+            success: function(a){
                 if(a.Success != undefined){
                     document.cookie = "authentication=" + a.Success
                     var authHeader = new Headers();
@@ -86,9 +87,6 @@
                     $('#inputPassword').focus()
                     alert(a.Error)
                 }
-                console.log(a);
-                console.log(b);
-                console.log(c);
             },
             error: function (){
                 $('#inputPassword').val('')
@@ -96,6 +94,10 @@
                 alert('Ocorreu um erro durante o envio do formulario, aguarde um estante e tente novamente!')
             }
         });
+    })
+
+    $('#creatAccount').on('click', function(){
+        window.location.replace('/view/create/user')
     })
 </script>
 
