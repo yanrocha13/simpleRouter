@@ -75,7 +75,7 @@
             url: '/api/auth',
             data: {'email': email,
                    'password': password},
-            success: function(a,b){
+            success: function(a,b,c){
                 if(a.Success != undefined){
                     document.cookie = "authentication=" + a.Success
                     var authHeader = new Headers();
@@ -86,6 +86,9 @@
                     $('#inputPassword').focus()
                     alert(a.Error)
                 }
+                console.log(a);
+                console.log(b);
+                console.log(c);
             },
             error: function (){
                 $('#inputPassword').val('')

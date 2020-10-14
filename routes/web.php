@@ -44,12 +44,13 @@ Router::group(['namespace' => '\Demo\Controllers', 'exceptionHandler' => CustomE
         });
     });
     // API
+
+    Router::post('/api/auth', 'DefaultController@authentication');
 	Router::group(['prefix' => '/api', 'middleware' => LoggerData::class], function () {
         Router::get('/', 'DefaultController@home')->setName('home');
 		Router::resource('/demo', 'ApiController');
         Router::get('/user/create', 'UsersController@create');
         Router::post('/user/create', 'UsersController@store');
-        Router::post('/auth', 'DefaultController@authentication');
 
 		Router::group(['prefix' => '/v1','exceptionHandler' => CustomExceptionHandler::class , 'middleware' => ApiVerification::class], function(){
 		    /** USER */

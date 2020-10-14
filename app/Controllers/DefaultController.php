@@ -35,12 +35,12 @@ class DefaultController
         if(isset($token)){
             return response()->json([
                 'Success' => $token
-            ]);
+            ], 200);
         }
         else {
             return response()->json([
                 'Error' => "Ocorreu um erro durante a autenticacao e nao foi possivel gerar o seu Token, verifique os dados e tente novamente."
-            ]);
+            ], 400);
         }
     }
 
