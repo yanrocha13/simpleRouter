@@ -81,7 +81,7 @@ class UserAddressController implements IResourceController
     {
         try{
             $request = input()->all();
-            $user = $this->userRepository->whereFirst('email',xorEncrypt($request['email']));
+            $user = getUser();
 
             if(isset($user)){
                 $create = [ 'user_id'=> $user->id,

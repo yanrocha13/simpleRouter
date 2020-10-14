@@ -68,14 +68,14 @@ class UserPhoneController implements IResourceController
     {
         try{
             $request = input()->all();
-            $user = $this->usersRepository->whereFirst('email',xorEncrypt($request['email']));
+            $user = getUser();
 
             if(isset($user)){
                 $create = [ 'user_id'=> $user->id,
                     'phone' => xorEncrypt($request['phone'])];
                 $phone = $this->userPhoneRepository->create($create);
                 return response()->json([
-                    'store' => "Phone added to user " . $user->id
+                    'Success' => "Phone added to user " . $user->id
                 ]);
             }else {
                 return response()->json([

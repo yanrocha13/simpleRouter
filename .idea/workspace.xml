@@ -21,7 +21,13 @@
   <component name="ChangeListManager">
     <list default="true" id="aac28da5-1c86-4ba4-9aef-9e63b6bd8d9e" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Controllers/UsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Controllers/UsersController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Controllers/UserAddressController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Controllers/UserAddressController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Controllers/UserPhoneController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Controllers/UserPhoneController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/Users/Create.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/Users/Create.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/Users/Index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/Users/Index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/template/template.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/template/template.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/etc/Log/model.log" beforeDir="false" afterPath="$PROJECT_DIR$/etc/Log/model.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/etc/Log/view.log" beforeDir="false" afterPath="$PROJECT_DIR$/etc/Log/view.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -202,7 +208,7 @@
       <workItem from="1602095538617" duration="2605000" />
       <workItem from="1602526785794" duration="13674000" />
       <workItem from="1602595746239" duration="3355000" />
-      <workItem from="1602646045915" duration="4048000" />
+      <workItem from="1602646045915" duration="7301000" />
     </task>
     <servers />
   </component>
