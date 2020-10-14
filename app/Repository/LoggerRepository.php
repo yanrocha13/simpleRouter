@@ -10,6 +10,20 @@ use Monolog\Logger;
 class LoggerRepository implements LoggerRepositoryInterface
 {
     /**
+     * @var Logger
+     */
+    private $logger;
+
+    /**
+     * LoggerRepository constructor.
+     * @param Logger $logger
+     */
+    public function __construct(Logger $logger)
+    {
+        $this->logger = $logger;
+    }
+
+    /**
      * @param string $model
      * @param string $message
      * @param int $level
@@ -17,7 +31,7 @@ class LoggerRepository implements LoggerRepositoryInterface
      */
     public function createModelLog(string $model, string $message, int $level, ?array $context = null ): void
     {
-        $log = new Logger($model);
+        $log = $this->logger->withName($model);
         $log->pushHandler(new StreamHandler(__DIR__ . '/../../etc/Log/model.log', $level));
         $this->logMessageAndContext($level, $log,$message, $context);
     }
@@ -30,7 +44,7 @@ class LoggerRepository implements LoggerRepositoryInterface
      */
     public function createViewLog(string $view, string $message, int $level, ?array $context = []): void
     {
-        $log = new Logger($view);
+        $log = $this->logger->withName($view);
         $log->pushHandler(new StreamHandler(__DIR__ . '/../../etc/Log/view.log', $level));
         $this->logMessageAndContext($level, $log,$message, $context);
     }

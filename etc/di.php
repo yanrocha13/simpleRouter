@@ -26,5 +26,6 @@ return [
     AccountTransactionRepositoryInterface::class => DI\autowire(AccountTransactionRepository::class),
     AuthInterface::class => DI\autowire(AuthRepository::class),
     LoggerRepositoryInterface::class => DI\autowire(LoggerRepository::class),
+    Logger::class => DI\autowire(Logger::class)->constructor('INFO'),
     Environment::class => DI\autowire(Renderer::class),
 ];

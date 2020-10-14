@@ -24,8 +24,9 @@ Router::csrfVerifier(new CsrfVerifier());
 
 Router::group(['namespace' => '\Demo\Controllers', 'exceptionHandler' => CustomExceptionHandler::class], function () {
     // VIEWS
+
+    Router::get('/view/auth', 'DefaultController@auth');
     Router::group(['prefix' => '/view', 'middleware' => LoggerView::class], function () {
-        Router::get('/auth', 'DefaultController@auth');
         Router::group(['prefix' => '/show', 'middleware' => ApiVerification::class], function () {
             Router::get('/transaction', 'AccountTransactionsController@viewIndex');
             Router::get('/user', 'UsersController@renderShow');
